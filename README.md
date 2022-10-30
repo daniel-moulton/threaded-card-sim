@@ -6,3 +6,7 @@ Push time!
 
 joop
 sfa
+
+trello:
+
+https://trello.com/b/jrJgzcUv/software-development
