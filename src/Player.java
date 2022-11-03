@@ -1,4 +1,4 @@
-package src.cardsim;
+package src;
 public class Player {
     
 }
