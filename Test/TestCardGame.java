@@ -19,7 +19,8 @@ public class TestCardGame {
     @Test
     public void testIsValidPackFileValidFile(){
         int numPlayers=5;
-        String filePath="src/Test/valid5PlayersPack.txt";
-        assertEquals("Valid file not recognised as valid", CardGame.isValidPackFile(filePath, numPlayers));
+        String filePath="Test/valid5PlayersPack.txt";
+        System.out.println("Working Directory = " + System.getProperty("user.dir"));
+        assertTrue("Valid file not recognised as valid", CardGame.isValidPackFile(filePath, numPlayers));
     }
 }
