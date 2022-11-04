@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 public class CardGame{
     
+    public static Scanner scanner = new Scanner(System.in);
     public final int NUMBER_OF_PLAYERS;
     public Card[] cards;
     
@@ -19,6 +20,7 @@ public class CardGame{
         }
         // getInputPack(5);
     }
+    
     public CardGame(int numPlayers, Card[] cards)
     {
         // Initialise the number of players
@@ -28,7 +30,6 @@ public class CardGame{
     
     public static int getNumberOfPlayers(){
         int numPlayers=0;
-        Scanner scanner = new Scanner(System.in);
         while(numPlayers<2){
             System.out.println("Enter the number of players (must be greater than 1): ");
             if(scanner.hasNextInt()){
@@ -47,7 +48,6 @@ public class CardGame{
     public static Card[] getInputPack(int numPlayers){
         String packLocation;
         Card[] pack =  new Card[numPlayers];
-        Scanner scanner = new Scanner(System.in);
         while(true){
             System.out.println("Enter the location of the pack file: ");
             if (scanner.hasNextLine()){
