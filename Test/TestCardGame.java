@@ -19,7 +19,7 @@ public class TestCardGame {
     @Test
     public void testIsValidPackFileValidFile(){
         int numPlayers=5;
-        String filePath="/Users/danielmoulton/UniDocs/Year 2/Term 1/SoftwareDev/CA/threaded-card-sim/Test/valid5PlayersPack.txt";
+        String filePath="../Test/valid5PlayersPack.txt";
         System.out.println("Working Directory = " + System.getProperty("user.dir"));
         assertTrue("Valid file not recognised as valid", CardGame.isValidPackFile(filePath, numPlayers));
     }
