@@ -48,6 +48,7 @@ public class CardGame{
     public static Card[] getInputPack(int numPlayers){
         String packLocation;
         Card[] pack =  new Card[numPlayers];
+        scanner.nextLine();
         while(true){
             System.out.println("Enter the location of the pack file: ");
             if (scanner.hasNextLine()){
@@ -65,7 +66,7 @@ public class CardGame{
         return pack;
     }
 
-    private static Card[] readInPack(String packLocation, int numPlayers) {
+    public static Card[] readInPack(String packLocation, int numPlayers) {
         Card[] pack = new Card[numPlayers*8];
         // Read in the contents of the file at packLocation into the array pack
         try {
