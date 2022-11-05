@@ -1,7 +1,6 @@
 package src;
 public class Player {
-    //current hand
-    // prefered hand
+    // current hand
     // player name 
     // prefered player number (determined by name)
 }
