@@ -1,5 +1,6 @@
 package src;
 
+import java.io.File;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -13,6 +14,8 @@ public class Player extends WritesToFile {
     private Card[] hand;
 
     private Card drawnCard;
+
+    private File outputFile;
 
     private Queue<Card> discardables = new LinkedList<Card>();
     // deck to draw from
@@ -28,7 +31,7 @@ public class Player extends WritesToFile {
 
 
 
-    public Player(int playerNumber, CardDeck deckDrawnFrom, CardDeck deckInsertedTo){
+    public Player(int playerNumber, CardDeck deckDrawnFrom, CardDeck deckInsertedTo, String gameLocation){
         // Initialise the player's number
         this.PLAYER_NUMBER = playerNumber;
 
@@ -39,14 +42,23 @@ public class Player extends WritesToFile {
         this.deckDrawnFrom = deckDrawnFrom;
         // Initialise the deck to insert into
         this.deckInsertedTo = deckInsertedTo;
+
+        this.outputFile = new File(gameLocation + "/" + playerName + ".txt");  //io exceptions here?
     }
     // in constructor, 
     // current folder
     // create a file for them. (using their name)
 
+    public void dealCard(Card card){
+        hand[0] = (card);
+    }
+
+    public void appendToFile(){
+        outputFile.write()
+    }
 
 
-    public void initialiseDiscardables(Card[] hand){
+    public void initialiseDiscardables(){
         for (Card card : hand) {
             if (card.getCardValue() != PLAYER_NUMBER){
                 discardables.add(card);
@@ -61,7 +73,7 @@ public class Player extends WritesToFile {
 
     // removeCard:
     //   from discardables remove front of queue, remove from hand (empty slot 0), place into next deck,
-    public void removeCard(Queue<Card> discardables, Card[] hand, CardDeck deckInsertedTo){
+    public void removeCard(){
         // Remove the card from the discardables
         Card card = discardables.remove();
         // Remove the card from the hand
@@ -73,18 +85,18 @@ public class Player extends WritesToFile {
         deckInsertedTo.insertCard(card);
     }   
 
-    public void placeCardInHand(Card drawncard) {
+    public void placeCardInHand() {
         for (int i = 0; i < hand.length; i++) {
             if (hand[i] == null){
-                hand[i] = drawncard;
-                if (drawncard.getCardValue() != PLAYER_NUMBER){
-                    discardables.add(drawncard);
+                hand[i] = drawnCard;
+                if (drawnCard.getCardValue() != PLAYER_NUMBER){
+                    discardables.add(drawnCard);
                 }
             }
         }
     }
 
-    public Boolean checkWinCondition(Card[] hand){
+    public Boolean checkWinCondition(){
         for (Card card : hand) {
             if (card.getCardValue() != (hand[0].getCardValue()))
                 return false;
