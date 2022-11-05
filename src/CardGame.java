@@ -3,6 +3,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Scanner;
 
 public class CardGame{
@@ -10,6 +11,7 @@ public class CardGame{
     //folder for each game with date time?
     // list of players
     // list of decks
+    public String gameLocation;
     public static Scanner scanner = new Scanner(System.in);
     public final int NUMBER_OF_PLAYERS;
     public Card[] cards;
@@ -30,6 +32,11 @@ public class CardGame{
         // Initialise the number of players
         NUMBER_OF_PLAYERS = numPlayers;
         this.cards = cards;
+        String time = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
+        this.gameLocation = "./games/"+time;
+        //if ( new File(folderLocation).mkdirs() ) potentially throw exception if folder isnt created 
+        //    System.out.println("hello");
+        //}
     }
     
     public static int getNumberOfPlayers(){
