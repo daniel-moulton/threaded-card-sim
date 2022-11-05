@@ -26,5 +26,13 @@ public class CardDeck{ //inherits WritesToFile
 
         public Card removeCard(){
                 return contents.remove();
+                // Card card= contents.remove();
+                // System.out.println("Card removed: " + card.getCardValue());
+        }
+
+        public void outputDeck(){
+                for(Card card : contents){
+                        System.out.println(card.getCardValue());
+                }
         }
 }
