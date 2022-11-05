@@ -86,7 +86,7 @@ public class Player extends WritesToFile {
 
     public Boolean checkWinCondition(Card[] hand){
         for (Card card : hand) {
-            if (!card.equals(hand[0]))
+            if (card.getCardValue() != (hand[0].getCardValue()))
                 return false;
         }
         return true;
