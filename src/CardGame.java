@@ -13,6 +13,7 @@ public class CardGame{
     
     public static void main(String[] args){
         System.out.println("Welcome to the Card Game!");
+        System.out.println(new File(".").getAbsolutePath());
         int numPlayers=getNumberOfPlayers();
         CardGame game = new CardGame(numPlayers,getInputPack(numPlayers));
         for (Card card : game.cards) {

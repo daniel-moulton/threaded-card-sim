@@ -19,7 +19,8 @@ public class TestCardGame {
     @Test
     public void testIsValidPackFileValidFile(){
         int numPlayers=5;
-        String filePath="bin/Test/valid5PlayersPack.txt";
+        String filePath="Test/valid5PlayersPack.txt";
+        System.out.println(new File(".").getAbsolutePath());
         assertTrue("Valid file not recognised as valid", CardGame.isValidPackFile(filePath, numPlayers));
     }
 
@@ -45,5 +46,13 @@ public class TestCardGame {
         String filePath="bin/Test/valid5PlayersPack.txt";
         // Console message should read "ERROR: There are not 24 cards in the pack file"        
         assertFalse("Incorrect number of cards for number of players not recognised as invalid", CardGame.isValidPackFile(filePath, numPlayers));
+    }
+
+    @Test
+    public void testIsValidPackFileNegativeIntegerCard(){
+        int numPlayers=5;
+        String filePath="bin/Test/invalidNegative5PlayersPack.txt";
+        // Console message should read "ERROR: Pack file contains a non-positive integer"
+        assertFalse("Negative integer card not recognised as invalid", CardGame.isValidPackFile(filePath, numPlayers));
     }
 }
