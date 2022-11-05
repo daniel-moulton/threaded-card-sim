@@ -46,7 +46,7 @@ public class Player extends WritesToFile {
 
 
 
-    public void ChooseDiscardables(Card[] hand){
+    public void initialiseDiscardables(Card[] hand){
         for (Card card : hand) {
             if (card.getCardValue() != PLAYER_NUMBER){
                 discardables.add(card);
@@ -74,7 +74,7 @@ public class Player extends WritesToFile {
         }
         deckInsertedTo.insertCard(card);
     }   
-    
+
     public void placeCardInHand(Card drawncard) {
         for (int i = 0; i < hand.length; i++) {
             if (hand[i] == null){
