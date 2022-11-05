@@ -9,7 +9,7 @@ public class Player extends WritesToFile {
 
     private final int PLAYER_NUMBER;
 
-    private final String playerName;
+    private final String PLAYER_NAME;
     private Card[] hand;
 
     private Card drawnCard;
@@ -32,7 +32,7 @@ public class Player extends WritesToFile {
         // Initialise the player's number
         this.PLAYER_NUMBER = playerNumber;
 
-        this.playerName = "player " + PLAYER_NUMBER;
+        this.PLAYER_NAME = "player " + PLAYER_NUMBER;
         // Initialise the player's hand
         this.hand = new Card[4];
         // Initialise the deck to draw from
@@ -90,6 +90,18 @@ public class Player extends WritesToFile {
                 return false;
         }
         return true;
+    }
+
+    public void showCards(){
+        for (Card card : hand) {
+            System.out.println(card.getCardValue());
+        }
+    }
+
+
+
+    public String getPlayerName() {
+        return PLAYER_NAME;
     }
 
     // close file

@@ -2,6 +2,7 @@ package Test;
 import org.junit.Before;
 import org.junit.Test;
 
+import src.Card;
 import src.CardGame;
 
 import org.junit.After;
@@ -11,10 +12,12 @@ import static org.junit.Assert.*;
 import java.io.File;
 
 public class TestCardGame {
+    public CardGame game;
 
     @Before
     public void setUp() {
-
+        Card[] cards = CardGame.readInPack("valid5PlayersPack.txt", 5);
+        game = new CardGame(5, cards);
     }
 
     @Test
@@ -55,5 +58,12 @@ public class TestCardGame {
         String filePath="Test/invalidNegative5PlayersPack.txt";
         // Console message should read "ERROR: Pack file contains a non-positive integer"
         assertFalse("Negative integer card not recognised as invalid", CardGame.isValidPackFile(filePath, numPlayers));
+    }
+
+    @Test
+    public void testDealCards(){
+        game.dealCards(game.cards, game.players, game.decks);
+        game.players[0].showCards();
+
     }
 }

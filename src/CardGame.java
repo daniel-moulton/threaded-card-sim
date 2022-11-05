@@ -15,7 +15,28 @@ public class CardGame{
     public static Scanner scanner = new Scanner(System.in);
     public final int NUMBER_OF_PLAYERS;
     public Card[] cards;
+    public Player[] players;
+    public CardDeck[] decks;
     
+    public void dealCards(Card[] cards, Player[] players, CardDeck[] decks){
+        // Index of which card we're dealing
+        int cardIndex = 0;
+        // For each loop of dealing a card
+        for (int cardIndexInHand = 0; cardIndexInHand < 4; cardIndexInHand++) {
+            // For each player in the game
+            for (Player player : players) {
+                player.placeCardInHand(cards[cardIndex]);
+                cardIndex++;
+            }
+        }
+        for (int cardIndexInHand = 0; cardIndexInHand < 4; cardIndexInHand++) {
+            // For each player in the game
+            for (CardDeck deck : decks) {
+                deck.insertCard(cards[cardIndex]);
+                cardIndex++;
+            }
+        }
+    }
     public static void main(String[] args){
         System.out.println("Welcome to the Card Game!");
         System.out.println(new File(".").getAbsolutePath());
@@ -24,7 +45,12 @@ public class CardGame{
         for (Card card : game.cards) {
             System.out.println(card.getCardValue());
         }
-        // getInputPack(5);
+        System.out.println("Dealing cards...");
+        game.dealCards(game.cards, game.players, game.decks);
+        for (Player player : game.players) {
+            System.out.println("Player " + player.getPlayerName() + "'s hand:");
+            player.showCards();
+        }
     }
     
     public CardGame(int numPlayers, Card[] cards)
@@ -34,6 +60,15 @@ public class CardGame{
         this.cards = cards;
         String time = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
         this.gameLocation = "./games/"+time;
+        // Initialise the decks
+        decks = new CardDeck[NUMBER_OF_PLAYERS];
+        for (int i = 0; i < decks.length; i++) {
+            decks[i] = new CardDeck();
+        }
+        players = new Player[NUMBER_OF_PLAYERS];
+        for (int i = 0; i < players.length; i++) {
+            players[i] = new Player(i+1,decks[i],decks[(i+1)%NUMBER_OF_PLAYERS]);
+        }
         //if ( new File(folderLocation).mkdirs() ) potentially throw exception if folder isnt created 
         //    System.out.println("hello");
         //}
