@@ -43,4 +43,8 @@ public class CardDeck{ //inherits WritesToFile
                         System.out.println(card.getCardValue());
                 }
         }
+
+        public int getDeckLength(){
+                return contents.size();
+        }
 }

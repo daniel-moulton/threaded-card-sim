@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Scanner;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class CardGame{
     
@@ -17,6 +18,7 @@ public class CardGame{
     public Card[] cards;
     public Player[] players;
     public CardDeck[] decks;
+    public static AtomicInteger winningPlayer = new AtomicInteger();
     
     public void dealCards(Card[] cards, Player[] players, CardDeck[] decks){
         // Index of which card we're dealing
@@ -48,12 +50,7 @@ public class CardGame{
         System.out.println("Dealing cards...");
         game.dealCards(game.cards, game.players, game.decks);
         for (Player player : game.players) {
-            System.out.println("Player " + player.getPlayerName() + "'s hand:");
-            player.showCards();
-        }
-        for (CardDeck deck : game.decks) {
-            System.out.println("Deck " + deck.getDeckNumber() + "'s contents:");
-            deck.outputDeck();
+            new Thread(player).start();
         }
     }
     

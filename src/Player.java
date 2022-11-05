@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class Player extends WritesToFile {
+public class Player extends WritesToFile implements Runnable{
 
     // current hand
 
@@ -92,6 +92,7 @@ public class Player extends WritesToFile {
                 if (drawnCard.getCardValue() != PLAYER_NUMBER){
                     discardables.add(drawnCard);
                 }
+                break;
             }
         }
     }
@@ -105,15 +106,55 @@ public class Player extends WritesToFile {
     }
 
     public void showCards(){
-        for (Card card : hand) {
-            System.out.println(card.getCardValue());
-        }
+        // for (Card card : hand) {
+        //     System.out.print(card.getCardValue());
+        // }
+        // Print the value of each card in hand in one single print statement
+        System.out.print(PLAYER_NAME + "'s cards: \n " + hand[0].getCardValue() + "," + hand[1].getCardValue() + "," + hand[2].getCardValue() + "," + hand[3].getCardValue() + "\n");
     }
 
 
 
     public String getPlayerName() {
         return PLAYER_NAME;
+    }
+
+    @Override
+    public void run(){
+        while (CardGame.winningPlayer.get()==0)
+        {
+            if (checkWinCondition()){
+                CardGame.winningPlayer.set(PLAYER_NUMBER);
+                System.out.println("Player " + PLAYER_NUMBER + " wins!");
+            }
+            // if the deck drawn from is empty the thread waits until it is notified by the previous player
+            else if (deckDrawnFrom.getDeckLength() == 0){
+                synchronized (this){
+                    try {
+                        this.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            else{
+                showCards();
+                System.out.println("Drawing card for " + PLAYER_NAME);
+                drawCard();
+                removeCard();
+                placeCardInHand(drawnCard);
+                showCards();
+                System.out.println("Player " + PLAYER_NUMBER + " TURN OVER");
+                synchronized (this){
+                    this.notifyAll();
+                }
+            }
+        }
+        // showCards();
+        // drawCard();
+        // removeCard();
+        // placeCardInHand(drawnCard);
+        // showCards();
     }
 
     // close file
