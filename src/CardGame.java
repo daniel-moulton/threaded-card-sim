@@ -7,6 +7,9 @@ import java.util.Scanner;
 
 public class CardGame{
     
+    //folder for each game with date time?
+    // list of players
+    // list of decks
     public static Scanner scanner = new Scanner(System.in);
     public final int NUMBER_OF_PLAYERS;
     public Card[] cards;
