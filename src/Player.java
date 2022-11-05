@@ -56,7 +56,7 @@ public class Player extends WritesToFile {
 
 
     public void drawCard(){
-        drawnCard = deckDrawnFrom.removeCard();
+        drawnCard = deckDrawnFrom.drawCard();
     }
 
     // removeCard:
