@@ -24,8 +24,7 @@ public class CardDeck{ //inherits WritesToFile
                 contents.add(new Card(value));
         }
 
-        public void removeCard(){
-                contents.remove();
+        public Card removeCard(){
+                return contents.remove();
         }
-
 }
