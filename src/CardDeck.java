@@ -7,11 +7,18 @@ public class CardDeck{ //inherits WritesToFile
 
         // Queue of the deck cards (FIFO)
         private Queue<Card> contents = new LinkedList<Card>();
+        private final int DECK_NUMBER;
 
-        public CardDeck() {
+        public CardDeck(int deckNumber) {
             // Initialise the deck's contents
             contents = new LinkedList<Card>();
+            DECK_NUMBER=deckNumber;
         }
+
+        public int getDeckNumber(){
+                return DECK_NUMBER;
+        }
+
         // folder to print to
 
         // generate 

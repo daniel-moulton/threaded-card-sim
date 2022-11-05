@@ -12,7 +12,7 @@ public class TestCardDeck{
     private static CardDeck deck;
     @Before
     public void setUp() {
-        deck = new CardDeck();
+        deck = new CardDeck(1);
     }
 
     @Test

@@ -51,6 +51,10 @@ public class CardGame{
             System.out.println("Player " + player.getPlayerName() + "'s hand:");
             player.showCards();
         }
+        for (CardDeck deck : game.decks) {
+            System.out.println("Deck " + deck.getDeckNumber() + "'s contents:");
+            deck.outputDeck();
+        }
     }
     
     public CardGame(int numPlayers, Card[] cards)
@@ -63,7 +67,7 @@ public class CardGame{
         // Initialise the decks
         decks = new CardDeck[NUMBER_OF_PLAYERS];
         for (int i = 0; i < decks.length; i++) {
-            decks[i] = new CardDeck();
+            decks[i] = new CardDeck(i+1);
         }
         players = new Player[NUMBER_OF_PLAYERS];
         for (int i = 0; i < players.length; i++) {
