@@ -46,7 +46,7 @@ public class Player extends WritesToFile {
 
 
 
-    public void ChooseDiscardables(Card[] hand){
+    public void initialiseDiscardables(Card[] hand){
         for (Card card : hand) {
             if (card.getCardValue() != PLAYER_NUMBER){
                 discardables.add(card);
@@ -57,15 +57,34 @@ public class Player extends WritesToFile {
 
     // drawCard
     //     alter drawn card variable, picking up from deck
+    public void drawCard(){
+        drawnCard = deckDrawnFrom.drawCard();
+    }
 
     // removeCard:
     //   from discardables remove front of queue, remove from hand (empty slot 0), place into next deck,
-    public void removeCard(Card[] discardables, Card[] hand, CardDeck deckInsertedTo){
+    public void removeCard(Queue<Card> discardables, Card[] hand, CardDeck deckInsertedTo){
+        // Remove the card from the discardables
+        Card card = discardables.remove();
+        // Remove the card from the hand
+        for (int i = 0; i < hand.length; i++) {
+            if (hand[i] == card){
+                hand[i] = null;
+            }
+        }
+        deckInsertedTo.insertCard(card);
+    }   
 
+    public void placeCardInHand(Card drawncard) {
+        for (int i = 0; i < hand.length; i++) {
+            if (hand[i] == null){
+                hand[i] = drawncard;
+                if (drawncard.getCardValue() != PLAYER_NUMBER){
+                    discardables.add(drawncard);
+                }
+            }
+        }
     }
-    // place drawncard:
-    //   add drawncard to empty slot in hand, if does not match desired number add to discardables
-
 
     // close file
 
