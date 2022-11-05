@@ -17,17 +17,17 @@ public class TestCardDeck{
 
     @Test
     public void testCardDeckInsert() {
-        deck.insertCard(5);
-        assertEquals("Card values incorrect",5, deck.removeCard().getCardValue());
+        deck.insertCard(new Card(5));
+        assertEquals("Card values incorrect",5, deck.drawCard().getCardValue());
     }
 
     @Test
     public void testCardDeckRemove() {
-        deck.insertCard(5);
-        deck.insertCard(6);
-        deck.insertCard(7);
-        deck.insertCard(8);
-        Card removed=deck.removeCard();
+        deck.insertCard(new Card(5));
+        deck.insertCard(new Card(6));
+        deck.insertCard(new Card(7));
+        deck.insertCard(new Card(8));
+        Card removed=deck.drawCard();
         assertEquals("Card values incorrect",5, removed.getCardValue());
     }
     @After
