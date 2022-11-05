@@ -5,8 +5,13 @@ import java.util.Queue;
 
 public class CardDeck{ //inherits WritesToFile
 
-        // contents queue ( card[])
+        // Queue of the deck cards (FIFO)
         private Queue<Card> contents = new LinkedList<Card>();
+
+        public CardDeck() {
+            // Initialise the deck's contents
+            contents = new LinkedList<Card>();
+        }
         // folder to print to
 
         // generate 
@@ -15,8 +20,12 @@ public class CardDeck{ //inherits WritesToFile
         // insert (to bottom) function - remove from bottom, return value. 
 
         // Write to file, folder 
+        public void insertCard(int value){
+                contents.add(new Card(value));
+        }
 
-
-
+        public void removeCard(){
+                contents.remove();
+        }
 
 }
