@@ -34,7 +34,7 @@ public class Player extends WritesToFile {
 
         this.playerName = "player " + PLAYER_NUMBER;
         // Initialise the player's hand
-        this.hand = new Card[3];
+        this.hand = new Card[4];
         // Initialise the deck to draw from
         this.deckDrawnFrom = deckDrawnFrom;
         // Initialise the deck to insert into
@@ -55,8 +55,7 @@ public class Player extends WritesToFile {
     }
 
 
-    // drawCard
-    //     alter drawn card variable, picking up from deck
+
     public void drawCard(){
         drawnCard = deckDrawnFrom.drawCard();
     }
@@ -84,6 +83,14 @@ public class Player extends WritesToFile {
                 }
             }
         }
+    }
+
+    public Boolean checkWinCondition(Card[] hand){
+        for (Card card : hand) {
+            if (!card.equals(hand[0]))
+                return false;
+        }
+        return true;
     }
 
     // close file
