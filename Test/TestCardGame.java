@@ -27,7 +27,7 @@ public class TestCardGame {
     @Test
     public void testIsValidPackFileNonIntegerCard(){
         int numPlayers=5;
-        String filePath="bin/Test/invalidString5PlayersPack.txt";
+        String filePath="Test/invalidString5PlayersPack.txt";
         // Console message should read "ERROR: Pack file contains a non-integer"
         assertFalse("Non-integer card not recognised as invalid", CardGame.isValidPackFile(filePath, numPlayers));
     }
@@ -43,7 +43,7 @@ public class TestCardGame {
     @Test
     public void testIsValidPackFileInvalidNumberOfCards(){
         int numPlayers=3;
-        String filePath="bin/Test/valid5PlayersPack.txt";
+        String filePath="Test/valid5PlayersPack.txt";
         // Console message should read "ERROR: There are not 24 cards in the pack file"        
         assertFalse("Incorrect number of cards for number of players not recognised as invalid", CardGame.isValidPackFile(filePath, numPlayers));
     }
@@ -51,7 +51,7 @@ public class TestCardGame {
     @Test
     public void testIsValidPackFileNegativeIntegerCard(){
         int numPlayers=5;
-        String filePath="bin/Test/invalidNegative5PlayersPack.txt";
+        String filePath="Test/invalidNegative5PlayersPack.txt";
         // Console message should read "ERROR: Pack file contains a non-positive integer"
         assertFalse("Negative integer card not recognised as invalid", CardGame.isValidPackFile(filePath, numPlayers));
     }
