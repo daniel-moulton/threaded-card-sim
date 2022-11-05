@@ -18,7 +18,7 @@ public class TestCardDeck{
     @Test
     public void testCardDeckInsert() {
         deck.insertCard(new Card(5));
-        assertEquals("Card values incorrect",5, deck.removeCard().getCardValue());
+        assertEquals("Card values incorrect",5, deck.drawCard().getCardValue());
     }
 
     @Test
@@ -27,7 +27,7 @@ public class TestCardDeck{
         deck.insertCard(new Card(6));
         deck.insertCard(new Card(7));
         deck.insertCard(new Card(8));
-        Card removed=deck.removeCard();
+        Card removed=deck.drawCard();
         assertEquals("Card values incorrect",5, removed.getCardValue());
     }
     @After

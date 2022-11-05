@@ -24,11 +24,12 @@ public class CardDeck{ //inherits WritesToFile
                 contents.add(card);
         }
 
-        public Card removeCard(){
+        public Card drawCard(){
                 return contents.remove();
                 // Card card= contents.remove();
                 // System.out.println("Card removed: " + card.getCardValue());
         }
+
 
         public void outputDeck(){
                 for(Card card : contents){
