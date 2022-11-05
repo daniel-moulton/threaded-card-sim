@@ -20,8 +20,8 @@ public class CardDeck{ //inherits WritesToFile
         // insert (to bottom) function - remove from bottom, return value. 
 
         // Write to file, folder 
-        public void insertCard(int value){
-                contents.add(new Card(value));
+        public void insertCard(Card card){
+                contents.add(card);
         }
 
         public Card removeCard(){
