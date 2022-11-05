@@ -60,9 +60,18 @@ public class Player extends WritesToFile {
 
     // removeCard:
     //   from discardables remove front of queue, remove from hand (empty slot 0), place into next deck,
-    public void removeCard(Card[] discardables, Card[] hand, CardDeck deckInsertedTo){
+    public void removeCard(Queue<Card> discardables, Card[] hand, CardDeck deckInsertedTo){
+        // Remove the card from the discardables
+        Card card = discardables.remove();
+        // Remove the card from the hand
+        for (int i = 0; i < hand.length; i++) {
+            if (hand[i] == card){
+                hand[i] = null;
+            }
+        }
+        // Insert the card into the next deck
+        deckInsertedTo.insertCard(card);
 
-    }
     // place drawncard:
     //   add drawncard to empty slot in hand, if does not match desired number add to discardables
 
