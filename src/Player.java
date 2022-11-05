@@ -1,8 +1,11 @@
 package src;
 public class Player {
+
     // current hand
-    // player number (determined by name)
-    // player name 
+    // player number 
+
+    // player name  (determined by number), auto-generated attribute
+
     // folder to print to
 
     // deck to draw from
@@ -18,6 +21,8 @@ public class Player {
 
 
     // close file
+
+    // function: writes deck contents files
 
 
 }
