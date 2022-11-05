@@ -43,7 +43,7 @@ public class Player extends WritesToFile {
         // Initialise the deck to insert into
         this.deckInsertedTo = deckInsertedTo;
 
-        this.outputFile = new File(gameLocation + "/" + playerName + ".txt");  //io exceptions here?
+        this.outputFile = new File(gameLocation + "/" + PLAYER_NAME + ".txt");  //io exceptions here?
     }
     // in constructor, 
     // current folder
@@ -54,7 +54,7 @@ public class Player extends WritesToFile {
     }
 
     public void appendToFile(){
-        outputFile.write()
+        // outputFile.write()
     }
 
 
@@ -85,7 +85,7 @@ public class Player extends WritesToFile {
         deckInsertedTo.insertCard(card);
     }   
 
-    public void placeCardInHand() {
+    public void placeCardInHand(Card drawnCard) {
         for (int i = 0; i < hand.length; i++) {
             if (hand[i] == null){
                 hand[i] = drawnCard;

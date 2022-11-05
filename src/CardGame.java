@@ -67,7 +67,7 @@ public class CardGame{
         }
         players = new Player[NUMBER_OF_PLAYERS];
         for (int i = 0; i < players.length; i++) {
-            players[i] = new Player(i+1,decks[i],decks[(i+1)%NUMBER_OF_PLAYERS]);
+            players[i] = new Player(i+1,decks[i],decks[(i+1)%NUMBER_OF_PLAYERS],gameLocation);
         }
         //if ( new File(folderLocation).mkdirs() ) potentially throw exception if folder isnt created 
         //    System.out.println("hello");
