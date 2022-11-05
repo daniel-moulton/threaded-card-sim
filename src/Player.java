@@ -5,6 +5,9 @@ public class Player {
     // player name 
     // folder to print to
 
+    // deck to draw from
+    // deck to insert into
+    // pass in deck into constructor
 
     // in constructor, 
     // current folder
