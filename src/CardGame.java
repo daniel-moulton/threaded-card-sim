@@ -44,9 +44,6 @@ public class CardGame{
         System.out.println(new File(".").getAbsolutePath());
         int numPlayers=getNumberOfPlayers();
         CardGame game = new CardGame(numPlayers,getInputPack(numPlayers)); //do we want to put get input pack in the cardgame constructor instead of passing in num players twice?
-        for (Card card : game.cards) {
-            System.out.println(card.getCardValue());
-        }
         System.out.println("Dealing cards...");
         game.dealCards(game.cards, game.players, game.decks);
         for (Player player : game.players) {
@@ -72,9 +69,6 @@ public class CardGame{
         for (int i = 0; i < players.length; i++) {
             players[i] = new Player(i+1,decks[i],decks[(i+1)%NUMBER_OF_PLAYERS],GAME_LOCATION);
         }
-        //if ( new File(folderLocation).mkdirs() ) potentially throw exception if folder isnt created 
-        //    System.out.println("hello");
-        //}
     }
     
     public static int getNumberOfPlayers(){

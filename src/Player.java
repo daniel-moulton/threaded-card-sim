@@ -24,14 +24,6 @@ public class Player extends WritesToFile implements Runnable{
     private CardDeck deckDrawnFrom;
     // deck to insert into
     private CardDeck deckInsertedTo;
-    // pass in deck into constructor
-
-
-    // player number (determined by name)
-    // player name 
-    // folder to print to
-
-
 
     public Player(int playerNumber, CardDeck deckDrawnFrom, CardDeck deckInsertedTo, String gameLocation){
         // Initialise the player's number
@@ -48,13 +40,9 @@ public class Player extends WritesToFile implements Runnable{
         try {
             this.outputter = new PrintStream(new File(gameLocation + "/" + PLAYER_NAME + "_output.txt"));
         } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
-    // in constructor, 
-    // current folder
-    // create a file for them. (using their name)
 
     public void initialHand(Card card, int handPosition){
         hand[handPosition] = card;
@@ -71,8 +59,6 @@ public class Player extends WritesToFile implements Runnable{
             }
         }
     }
-    
-
 
     public void appendToFile(String output){
         outputter.println(output);
@@ -94,7 +80,6 @@ public class Player extends WritesToFile implements Runnable{
         return card;
     }
 
-    // removeCard:
     //   from discardables remove front of queue, remove from hand (empty slot 0), place into next deck,
     public void removeMostDiscardable(){
         // Remove the card from the discardables
@@ -130,27 +115,20 @@ public class Player extends WritesToFile implements Runnable{
         return true;
     }
 
-    public void showCards(){
-        // for (Card card : hand) {
-        //     System.out.print(card.getCardValue());
-        // }
-        // Print the value of each card in hand in one single print statement
-        System.out.print(PLAYER_NAME + "'s cards: \n " + hand[0].getCardValue() + "," + hand[1].getCardValue() + "," + hand[2].getCardValue() + "," + hand[3].getCardValue() + "\n");
-    }
-
-
-
     public String getPlayerName() {
         return PLAYER_NAME;
     }
 
+    public void gameWon(){
+        CardGame.winningPlayer.set(PLAYER_NUMBER);
+        System.out.println("Player " + PLAYER_NUMBER + " wins!");
+    }
     @Override
     public void run(){
         while (CardGame.winningPlayer.get()==0)
         {
-            if (checkWinCondition()){ //do we check when hand is updated instead?
-                CardGame.winningPlayer.set(PLAYER_NUMBER);
-                System.out.println("Player " + PLAYER_NUMBER + " wins!");
+            if (checkWinCondition()){
+                gameWon();
             }
             // if the deck drawn from is empty the thread waits until it is notified by the previous player
             else if (deckDrawnFrom.getDeckLength() == 0){
@@ -163,17 +141,12 @@ public class Player extends WritesToFile implements Runnable{
                 }
             }
             else{
-                showCards();
-                System.out.println("Drawing card for " + PLAYER_NAME);
                 Card drawnCard = drawCard();
                 removeMostDiscardable();
                 updateHand(drawnCard);
-                showCards();
-                System.out.println("Player " + PLAYER_NUMBER + " TURN OVER");
 
                 if (checkWinCondition()){
-                    CardGame.winningPlayer.set(PLAYER_NUMBER);
-                    System.out.println("Player " + PLAYER_NUMBER + " wins!");
+                    gameWon();
                 }
                 synchronized (this){
                     this.notifyAll();
@@ -197,17 +170,5 @@ public class Player extends WritesToFile implements Runnable{
         }
 
         outputter.close();
-        // showCards();
-        // drawCard();
-        // removeCard();
-        // showCards();
     }
-
-    // close file
-
-    // function: writes deck contents files
-
-
-    // method that checks if their hand wins
-
 }

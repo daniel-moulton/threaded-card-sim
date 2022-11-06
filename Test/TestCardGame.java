@@ -63,7 +63,6 @@ public class TestCardGame {
     @Test
     public void testDealCards(){
         game.dealCards(game.cards, game.players, game.decks);
-        game.players[0].showCards();
 
     }
 }
