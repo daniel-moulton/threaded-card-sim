@@ -46,7 +46,7 @@ public class Player extends WritesToFile implements Runnable{
         this.deckInsertedTo = deckInsertedTo;
 
         try {
-            this.outputter = new PrintStream(new File(gameLocation + "\\" + PLAYER_NAME + "_output.txt"));
+            this.outputter = new PrintStream(new File(gameLocation + "/" + PLAYER_NAME + "_output.txt"));
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
