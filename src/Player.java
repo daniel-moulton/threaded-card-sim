@@ -13,8 +13,6 @@ public class Player extends WritesToFile implements Runnable{
     private final String PLAYER_NAME;
     private Card[] hand;
 
-    private Card drawnCard;
-
     private File outputFile;
 
     private Queue<Card> discardables = new LinkedList<Card>();
@@ -49,10 +47,6 @@ public class Player extends WritesToFile implements Runnable{
     // current folder
     // create a file for them. (using their name)
 
-    public void dealCard(Card card){
-        hand[0] = (card);
-    }
-
     public void appendToFile(){
         // outputFile.write()
     }
@@ -67,13 +61,13 @@ public class Player extends WritesToFile implements Runnable{
     }
 
 
-    public void drawCard(){
-        drawnCard = deckDrawnFrom.drawCard();
+    public Card drawCard(){
+        return deckDrawnFrom.drawCard();
     }
 
     // removeCard:
     //   from discardables remove front of queue, remove from hand (empty slot 0), place into next deck,
-    public void removeCard(){
+    public void removeMostDiscardable(){
         // Remove the card from the discardables
         Card card = discardables.remove();
         // Remove the card from the hand
@@ -85,7 +79,7 @@ public class Player extends WritesToFile implements Runnable{
         deckInsertedTo.insertCard(card);
     }   
 
-    public void placeCardInHand(Card drawnCard) {
+    public void updateHand(Card drawnCard) {
         for (int i = 0; i < hand.length; i++) {
             if (hand[i] == null){
                 hand[i] = drawnCard;
@@ -123,7 +117,7 @@ public class Player extends WritesToFile implements Runnable{
     public void run(){
         while (CardGame.winningPlayer.get()==0)
         {
-            if (checkWinCondition()){
+            if (checkWinCondition()){ //do we check when hand is updated instead?
                 CardGame.winningPlayer.set(PLAYER_NUMBER);
                 System.out.println("Player " + PLAYER_NUMBER + " wins!");
             }
@@ -140,9 +134,10 @@ public class Player extends WritesToFile implements Runnable{
             else{
                 showCards();
                 System.out.println("Drawing card for " + PLAYER_NAME);
-                drawCard();
-                removeCard();
-                placeCardInHand(drawnCard);
+
+                Card drawnCard = drawCard();
+                removeMostDiscardable();
+                updateHand(drawnCard);
                 showCards();
                 System.out.println("Player " + PLAYER_NUMBER + " TURN OVER");
                 synchronized (this){
@@ -153,7 +148,6 @@ public class Player extends WritesToFile implements Runnable{
         // showCards();
         // drawCard();
         // removeCard();
-        // placeCardInHand(drawnCard);
         // showCards();
     }
 
