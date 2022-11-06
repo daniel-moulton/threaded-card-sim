@@ -1,6 +1,10 @@
 package src;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintStream;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -13,7 +17,7 @@ public class Player extends WritesToFile implements Runnable{
     private final String PLAYER_NAME;
     private Card[] hand;
 
-    private File outputFile;
+    private PrintStream outputter;
 
     private Queue<Card> discardables = new LinkedList<Card>();
     // deck to draw from
@@ -33,7 +37,7 @@ public class Player extends WritesToFile implements Runnable{
         // Initialise the player's number
         this.PLAYER_NUMBER = playerNumber;
 
-        this.PLAYER_NAME = "player " + PLAYER_NUMBER;
+        this.PLAYER_NAME = "player" + PLAYER_NUMBER;
         // Initialise the player's hand
         this.hand = new Card[4];
         // Initialise the deck to draw from
@@ -41,18 +45,53 @@ public class Player extends WritesToFile implements Runnable{
         // Initialise the deck to insert into
         this.deckInsertedTo = deckInsertedTo;
 
-        this.outputFile = new File(gameLocation + "/" + PLAYER_NAME + ".txt");  //io exceptions here?
+        try {
+            this.outputter = new PrintStream(new File(gameLocation + "\\" + PLAYER_NAME + "_output.txt"));
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
     // in constructor, 
     // current folder
     // create a file for them. (using their name)
 
-    public void appendToFile(){
-        // outputFile.write()
+    public void initialHand(Card card, int handPosition){
+        hand[handPosition] = card;
+        if (handPosition == 3){
+            appendToFile("Player " + PLAYER_NUMBER + " initial hand is " + handToString());
+            findDiscardables();
+        }
+    }
+
+    public void findDiscardables(){
+        for (int i = 0; i < hand.length; i++) {
+            if (hand[i].getCardValue() != PLAYER_NUMBER){
+                discardables.add(hand[i]);
+            }
+        }
+    }
+    
+
+
+    public void appendToFile(String output){
+        outputter.println(output);
+    }
+
+    public String handToString(){
+        String stringHand = "";
+        for (Card card : hand){
+            if (card != null){
+                stringHand += card.getCardValue() + " ";
+            }
+        }
+        return stringHand;
     }
 
     public Card drawCard(){
-        return deckDrawnFrom.drawCard();
+        Card card = deckDrawnFrom.drawCard();
+        appendToFile("Player " + PLAYER_NUMBER + " draws a " + card.getCardValue() + " from deck " + deckDrawnFrom.getDeckNumber());
+        return card;
     }
 
     // removeCard:
@@ -67,6 +106,7 @@ public class Player extends WritesToFile implements Runnable{
             }
         }
         deckInsertedTo.insertCard(card);
+        appendToFile("Player " + PLAYER_NUMBER + " discards a " + card.getCardValue() + " to deck " + deckInsertedTo.getDeckNumber());
     }   
 
     public void updateHand(Card drawnCard) {
@@ -79,6 +119,7 @@ public class Player extends WritesToFile implements Runnable{
                 break;
             }
         }
+        appendToFile("Player " + PLAYER_NUMBER + " current hand is " + handToString());
     }
 
     public Boolean checkWinCondition(){
@@ -139,6 +180,23 @@ public class Player extends WritesToFile implements Runnable{
                 }
             }
         }
+        int winnerNumber = CardGame.winningPlayer.get();
+        if (winnerNumber == PLAYER_NUMBER){
+            appendToFile("Player " + PLAYER_NUMBER + " wins");
+        }
+        else{
+            appendToFile("Player " + winnerNumber + " has informed Player " + PLAYER_NUMBER + " that Player " + winnerNumber + " has won");
+        }
+        appendToFile("Player " + PLAYER_NUMBER + " exits");
+
+        if (winnerNumber == PLAYER_NUMBER){
+            appendToFile("Player " + PLAYER_NUMBER + " final hand: " + handToString());
+        }
+        else{
+            appendToFile("Player " + PLAYER_NUMBER + " hand: " + handToString());
+        }
+
+        outputter.close();
         // showCards();
         // drawCard();
         // removeCard();

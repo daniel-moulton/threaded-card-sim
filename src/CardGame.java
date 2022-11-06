@@ -27,11 +27,11 @@ public class CardGame{
         for (int cardIndexInHand = 0; cardIndexInHand < 4; cardIndexInHand++) {
             // For each player in the game
             for (Player player : players) {
-                player.updateHand(cards[cardIndex]);
+                player.initialHand(cards[cardIndex], cardIndexInHand);
                 cardIndex++;
             }
         }
-        for (int i = 0; i < 4; i++) { // 4 cards in each deck (8n cards total)
+        for (int i = 0; i < 4; i++) { // 4 cards in each deck (8n cards)
             // For each deck in the game
             for (CardDeck deck : decks) {
                 deck.insertCard(cards[cardIndex]);
@@ -61,6 +61,8 @@ public class CardGame{
         this.cards = cards;
         String time = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
         this.GAME_LOCATION = "./games/"+time;
+
+        new File(GAME_LOCATION).mkdirs();
         // Initialise the decks
         decks = new CardDeck[NUMBER_OF_PLAYERS];
         for (int i = 0; i < decks.length; i++) {
