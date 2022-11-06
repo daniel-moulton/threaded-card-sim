@@ -51,16 +51,6 @@ public class Player extends WritesToFile implements Runnable{
         // outputFile.write()
     }
 
-
-    public void initialiseDiscardables(){
-        for (Card card : hand) {
-            if (card.getCardValue() != PLAYER_NUMBER){
-                discardables.add(card);
-            }
-        }
-    }
-
-
     public Card drawCard(){
         return deckDrawnFrom.drawCard();
     }
@@ -134,12 +124,16 @@ public class Player extends WritesToFile implements Runnable{
             else{
                 showCards();
                 System.out.println("Drawing card for " + PLAYER_NAME);
-
                 Card drawnCard = drawCard();
                 removeMostDiscardable();
                 updateHand(drawnCard);
                 showCards();
                 System.out.println("Player " + PLAYER_NUMBER + " TURN OVER");
+
+                if (checkWinCondition()){
+                    CardGame.winningPlayer.set(PLAYER_NUMBER);
+                    System.out.println("Player " + PLAYER_NUMBER + " wins!");
+                }
                 synchronized (this){
                     this.notifyAll();
                 }
