@@ -8,7 +8,7 @@ import java.io.PrintStream;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class Player extends WritesToFile implements Runnable{
+public class Player implements Runnable{
 
     // current hand
 
@@ -107,7 +107,7 @@ public class Player extends WritesToFile implements Runnable{
         appendToFile("Player " + PLAYER_NUMBER + " current hand is " + handToString());
     }
 
-    public Boolean checkWinCondition(){
+    public Boolean hasWon(){
         for (Card card : hand) {
             if (card.getCardValue() != (hand[0].getCardValue()))
                 return false;
@@ -127,7 +127,7 @@ public class Player extends WritesToFile implements Runnable{
     public void run(){
         while (CardGame.winningPlayer.get()==0)
         {
-            if (checkWinCondition()){
+            if (hasWon()){
                 gameWon();
             }
             // if the deck drawn from is empty the thread waits until it is notified by the previous player
@@ -145,7 +145,7 @@ public class Player extends WritesToFile implements Runnable{
                 removeMostDiscardable();
                 updateHand(drawnCard);
 
-                if (checkWinCondition()){
+                if (hasWon()){
                     gameWon();
                 }
                 synchronized (this){
@@ -168,7 +168,8 @@ public class Player extends WritesToFile implements Runnable{
         else{
             appendToFile("Player " + PLAYER_NUMBER + " hand: " + handToString());
         }
-
+        deckDrawnFrom.getDeckContentsAsString();
+        deckInsertedTo.getDeckContentsAsString();
         outputter.close();
     }
 }

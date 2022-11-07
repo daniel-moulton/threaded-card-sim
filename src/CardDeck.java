@@ -30,4 +30,13 @@ public class CardDeck{
         public int getDeckLength(){
                 return contents.size();
         }
+
+        public String getDeckContentsAsString(){
+                String output = "";
+                for(Card card : contents) { 
+                        output += card.getCardValue() + " "; 
+                      }
+                System.out.println("DECK" + DECK_NUMBER + " " + output);
+                return output;
+        }
 }
