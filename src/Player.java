@@ -19,13 +19,16 @@ public class Player implements Runnable{
 
     private PrintStream outputter;
 
+    private static final Object OBJECT_LOCK = new Object();
+
+
     private Queue<Card> discardables = new LinkedList<Card>();
     // deck to draw from
     private CardDeck deckDrawnFrom;
     // deck to insert into
     private CardDeck deckInsertedTo;
 
-    public Player(int playerNumber, CardDeck deckDrawnFrom, CardDeck deckInsertedTo, String gameLocation){
+    public Player(int playerNumber, CardDeck deckDrawnFrom, CardDeck deckInsertedTo){
         // Initialise the player's number
         this.PLAYER_NUMBER = playerNumber;
 
@@ -38,7 +41,7 @@ public class Player implements Runnable{
         this.deckInsertedTo = deckInsertedTo;
 
         try {
-            this.outputter = new PrintStream(new File(gameLocation + "/" + PLAYER_NAME + "_output.txt"));
+            this.outputter = new PrintStream(new File(CardGame.gameLocation + "/" + PLAYER_NAME + "_output.txt"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -52,7 +55,7 @@ public class Player implements Runnable{
         }
     }
 
-    public void findDiscardables(){
+    private void findDiscardables(){
         for (int i = 0; i < hand.length; i++) {
             if (hand[i].getCardValue() != PLAYER_NUMBER){
                 discardables.add(hand[i]);
@@ -60,11 +63,11 @@ public class Player implements Runnable{
         }
     }
 
-    public void appendToFile(String output){
+    private void appendToFile(String output){
         outputter.println(output);
     }
 
-    public String handToString(){
+    private String handToString(){
         String stringHand = "";
         for (Card card : hand){
             if (card != null){
@@ -94,7 +97,7 @@ public class Player implements Runnable{
         appendToFile("Player " + PLAYER_NUMBER + " discards a " + card.getCardValue() + " to deck " + deckInsertedTo.getDeckNumber());
     }   
 
-    public void updateHand(Card drawnCard) {
+    private void updateHand(Card drawnCard) {
         for (int i = 0; i < hand.length; i++) {
             if (hand[i] == null){
                 hand[i] = drawnCard;
@@ -107,7 +110,7 @@ public class Player implements Runnable{
         appendToFile("Player " + PLAYER_NUMBER + " current hand is " + handToString());
     }
 
-    public Boolean hasWon(){
+    private Boolean hasWon(){
         for (Card card : hand) {
             if (card.getCardValue() != (hand[0].getCardValue()))
                 return false;
@@ -121,38 +124,45 @@ public class Player implements Runnable{
 
     public void gameWon(){
         CardGame.winningPlayer.set(PLAYER_NUMBER);
+        synchronized (OBJECT_LOCK) {
+            OBJECT_LOCK.notifyAll();
+        }
         System.out.println("Player " + PLAYER_NUMBER + " wins!");
     }
     @Override
     public void run(){
         while (CardGame.winningPlayer.get()==0)
         {
+            //deckDrawnFrom.printContentsToFile();
             if (hasWon()){
                 gameWon();
+                break;
             }
-            // if the deck drawn from is empty the thread waits until it is notified by the previous player
-            else if (deckDrawnFrom.getDeckLength() == 0){
-                synchronized (this){
-                    try {
-                        this.wait();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-            else{
-                Card drawnCard = drawCard();
-                removeMostDiscardable();
-                updateHand(drawnCard);
 
-                if (hasWon()){
-                    gameWon();
-                }
-                synchronized (this){
-                    this.notifyAll();
-                }
+            while (deckDrawnFrom.getDeckLength() == 0 && CardGame.winningPlayer.get()==0){
+                try {
+                    synchronized (OBJECT_LOCK) {
+                        System.out.println("Player " + PLAYER_NUMBER + " waiting for deck " + deckDrawnFrom.getDeckNumber() + " to be filled");
+                        OBJECT_LOCK.wait();
+                    }
+                } catch (InterruptedException e) {}
+            }
+            if (CardGame.winningPlayer.get()!=0){ //dont bother waiting for new cards if its over
+                break;
+            }
+            Card drawnCard = drawCard();
+            removeMostDiscardable();
+            updateHand(drawnCard);
+
+            if (hasWon()){
+                gameWon();
+                break;
+            }
+            synchronized (OBJECT_LOCK) {
+                OBJECT_LOCK.notifyAll();
             }
         }
+        System.out.println("player " + PLAYER_NUMBER + " EXITS");
         int winnerNumber = CardGame.winningPlayer.get();
         if (winnerNumber == PLAYER_NUMBER){
             appendToFile("Player " + PLAYER_NUMBER + " wins");
@@ -168,8 +178,7 @@ public class Player implements Runnable{
         else{
             appendToFile("Player " + PLAYER_NUMBER + " hand: " + handToString());
         }
-        deckDrawnFrom.getDeckContentsAsString();
-        deckInsertedTo.getDeckContentsAsString();
+        deckDrawnFrom.printContentsToFile();
         outputter.close();
     }
 }

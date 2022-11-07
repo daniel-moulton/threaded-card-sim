@@ -12,7 +12,7 @@ public class CardGame{
     //folder for each game with date time?
     // list of players
     // list of decks
-    public final String GAME_LOCATION;
+    public static String gameLocation;
     public static Scanner scanner = new Scanner(System.in);
     public final int NUMBER_OF_PLAYERS;
     public Card[] cards;
@@ -47,7 +47,7 @@ public class CardGame{
         System.out.println("Dealing cards...");
         game.dealCards(game.cards, game.players, game.decks);
         for (Player player : game.players) {
-            new Thread(player).start();
+            new Thread(player).start(); //because thread1 will run first, it wont see that thread 3 has an immediate winner. therefore it will do its whole go. this is where we need interrupt        }
         }
     }
     
@@ -57,9 +57,9 @@ public class CardGame{
         NUMBER_OF_PLAYERS = numPlayers;
         this.cards = cards;
         String time = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
-        this.GAME_LOCATION = "./games/"+time;
+        gameLocation = "./games/"+time;
 
-        new File(GAME_LOCATION).mkdirs();
+        new File(gameLocation).mkdirs();
         // Initialise the decks
         decks = new CardDeck[NUMBER_OF_PLAYERS];
         for (int i = 0; i < decks.length; i++) {
@@ -67,7 +67,7 @@ public class CardGame{
         }
         players = new Player[NUMBER_OF_PLAYERS];
         for (int i = 0; i < players.length; i++) {
-            players[i] = new Player(i+1,decks[i],decks[(i+1)%NUMBER_OF_PLAYERS],GAME_LOCATION);
+            players[i] = new Player(i+1,decks[i],decks[(i+1)%NUMBER_OF_PLAYERS]);
         }
     }
     

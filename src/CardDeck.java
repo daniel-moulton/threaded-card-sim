@@ -1,18 +1,30 @@
 package src;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class CardDeck{
 
         // Queue of the deck cards (FIFO)
-        private Queue<Card> contents = new LinkedList<Card>();
+        private Queue<Card> contents = new ConcurrentLinkedQueue<Card>();
         private final int DECK_NUMBER;
 
+        private PrintStream outputter;
+
+        
         public CardDeck(int deckNumber) {
             // Initialise the deck's contents
             contents = new LinkedList<Card>();
             DECK_NUMBER=deckNumber;
+            try {
+                this.outputter = new PrintStream(new File(CardGame.gameLocation + "/" + "deck" + DECK_NUMBER + "_output.txt"));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
         }
 
         public int getDeckNumber(){
@@ -31,12 +43,17 @@ public class CardDeck{
                 return contents.size();
         }
 
-        public String getDeckContentsAsString(){
+        private String getDeckContentsAsString(){
                 String output = "";
                 for(Card card : contents) { 
                         output += card.getCardValue() + " "; 
                       }
-                System.out.println("DECK" + DECK_NUMBER + " " + output);
                 return output;
+        }
+
+        public void printContentsToFile(){
+                String output = getDeckContentsAsString();
+                outputter.println("Deck Contents: " + output);
+                outputter.close();
         }
 }
