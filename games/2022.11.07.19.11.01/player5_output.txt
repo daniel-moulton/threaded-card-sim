@@ -1,0 +1,34 @@
+Player 5 initial hand is 1 2 2 3 
+Player 5 draws a 4 from deck 5
+Player 5 discards a 1 to deck 1
+Player 5 current hand is 4 2 2 3 
+Player 5 draws a 4 from deck 5
+Player 5 discards a 2 to deck 1
+Player 5 current hand is 4 4 2 3 
+Player 5 draws a 5 from deck 5
+Player 5 discards a 2 to deck 1
+Player 5 current hand is 4 4 5 3 
+Player 5 draws a 5 from deck 5
+Player 5 discards a 3 to deck 1
+Player 5 current hand is 4 4 5 5 
+Player 5 draws a 1 from deck 5
+Player 5 discards a 4 to deck 1
+Player 5 current hand is 1 4 5 5 
+Player 5 draws a 2 from deck 5
+Player 5 discards a 4 to deck 1
+Player 5 current hand is 1 2 5 5 
+Player 5 draws a 2 from deck 5
+Player 5 discards a 1 to deck 1
+Player 5 current hand is 2 2 5 5 
+Player 5 draws a 3 from deck 5
+Player 5 discards a 2 to deck 1
+Player 5 current hand is 2 3 5 5 
+Player 5 draws a 5 from deck 5
+Player 5 discards a 2 to deck 1
+Player 5 current hand is 5 3 5 5 
+Player 5 draws a 5 from deck 5
+Player 5 discards a 3 to deck 1
+Player 5 current hand is 5 5 5 5 
+Player 5 wins
+Player 5 exits
+Player 5 final hand: 5 5 5 5 

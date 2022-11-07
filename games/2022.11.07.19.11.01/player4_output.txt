@@ -1,0 +1,31 @@
+Player 4 initial hand is 1 2 2 3 
+Player 4 draws a 4 from deck 4
+Player 4 discards a 1 to deck 5
+Player 4 current hand is 4 2 2 3 
+Player 4 draws a 4 from deck 4
+Player 4 discards a 2 to deck 5
+Player 4 current hand is 4 4 2 3 
+Player 4 draws a 5 from deck 4
+Player 4 discards a 2 to deck 5
+Player 4 current hand is 4 4 5 3 
+Player 4 draws a 5 from deck 4
+Player 4 discards a 3 to deck 5
+Player 4 current hand is 4 4 5 5 
+Player 4 draws a 1 from deck 4
+Player 4 discards a 5 to deck 5
+Player 4 current hand is 4 4 1 5 
+Player 4 draws a 2 from deck 4
+Player 4 discards a 5 to deck 5
+Player 4 current hand is 4 4 1 2 
+Player 4 draws a 2 from deck 4
+Player 4 discards a 1 to deck 5
+Player 4 current hand is 4 4 2 2 
+Player 4 draws a 4 from deck 4
+Player 4 discards a 2 to deck 5
+Player 4 current hand is 4 4 2 4 
+Player 4 draws a 5 from deck 4
+Player 4 discards a 2 to deck 5
+Player 4 current hand is 4 4 5 4 
+Player 5 has informed Player 4 that Player 5 has won
+Player 4 exits
+Player 4 hand: 4 4 5 4 

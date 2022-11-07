@@ -159,7 +159,7 @@ public class CardGame{
                 return false;
             }
         }
-        else { 
+        else {
             System.out.println("ERROR: Pack file does not exist");
             return false;
         }

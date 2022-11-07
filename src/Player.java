@@ -140,12 +140,12 @@ public class Player implements Runnable{
             }
 
             while (deckDrawnFrom.getDeckLength() == 0 && CardGame.winningPlayer.get()==0){
+                //System.out.println("Player " + PLAYER_NUMBER + " waiting for deck " + deckDrawnFrom.getDeckNumber() + " to be refilled");
                 try {
                     synchronized (OBJECT_LOCK) {
-                        System.out.println("Player " + PLAYER_NUMBER + " waiting for deck " + deckDrawnFrom.getDeckNumber() + " to be filled");
                         OBJECT_LOCK.wait();
                     }
-                } catch (InterruptedException e) {}
+                } catch (InterruptedException e) {} //handle? idk
             }
             if (CardGame.winningPlayer.get()!=0){ //dont bother waiting for new cards if its over
                 break;
