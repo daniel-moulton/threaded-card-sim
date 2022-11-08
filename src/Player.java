@@ -221,7 +221,6 @@ public class Player implements Runnable {
         OBJECT_LOCK.notifyAll();
       }
     }
-    System.out.println("player " + playerNumber + " EXITS");
     int winnerNumber = CardGame.winningPlayer.get();
     if (winnerNumber == playerNumber) {
       appendToFile("Player " + playerNumber + " wins");
