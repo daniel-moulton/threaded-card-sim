@@ -1,4 +1,5 @@
 package src;
+
 public class Card {
     private final int CARD_VALUE;
 
@@ -7,6 +8,10 @@ public class Card {
         CARD_VALUE = value;
     }
 
+    
+    /** 
+     * @return int
+     */
     public int getCardValue() {
         // Return the value of the card
         return CARD_VALUE;
