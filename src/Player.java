@@ -58,8 +58,7 @@ public class Player implements Runnable {
       // Check if the player has won initially.
       if (hasWon()) {
         playerWon();
-      }
-      else {
+      } else {
         findDiscardables();
       }
     }
