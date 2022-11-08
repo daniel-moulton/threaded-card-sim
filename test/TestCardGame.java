@@ -22,7 +22,7 @@ public class TestCardGame {
   @Before
   public void setUp() {
     Card[] cards = CardGame.readInPack("valid5PlayersPack.txt", 5);
-    game = new CardGame(5, cards);
+    game = new CardGame(5);
   }
 
   @Test
