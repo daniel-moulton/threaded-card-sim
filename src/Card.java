@@ -1,19 +1,26 @@
 package src;
 
+/**
+ * Represents a card in the game.
+ *
+ * @author Daniel Moulton
+ * @author James Pilcher
+ */
 public class Card {
-    private final int CARD_VALUE;
+  private final int cardValue;
 
-    public Card(int value) {
-        // Initialise the card's value
-        CARD_VALUE = value;
-    }
+  public Card(final int value) {
+    // Initialise the card's value
+    cardValue = value;
+  }
 
-    
-    /** 
-     * @return int
-     */
-    public int getCardValue() {
-        // Return the value of the card
-        return CARD_VALUE;
-    }
+
+  /**
+   * Getter for the value of the card.
+   *
+   * @return the denomination/value of the card
+   */
+  public int getCardValue() {
+    return cardValue;
+  }
 }
