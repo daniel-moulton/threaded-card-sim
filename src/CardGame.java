@@ -1,15 +1,18 @@
 package src;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Scanner;
+import java.util.concurrent.BrokenBarrierException;
+import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class CardGame{
-    
-    //folder for each game with date time?
+public class CardGame {
+
+    // folder for each game with date time?
     // list of players
     // list of decks
     public static String gameLocation;
@@ -19,8 +22,14 @@ public class CardGame{
     public Player[] players;
     public CardDeck[] decks;
     public static AtomicInteger winningPlayer = new AtomicInteger();
-    
-    public void dealCards(Card[] cards, Player[] players, CardDeck[] decks){
+    public static CyclicBarrier barrier;
+
+    /**
+     * @param cards
+     * @param players
+     * @param decks
+     */
+    public void dealCards(Card[] cards, Player[] players, CardDeck[] decks) {
         // Index of which card we're dealing
         int cardIndex = 0;
         // For each loop of dealing a card
@@ -39,68 +48,82 @@ public class CardGame{
             }
         }
     }
-    public static void main(String[] args){
+
+    /**
+     * @param args
+     * @throws InterruptedException
+     * @throws BrokenBarrierException
+     */
+    public static void main(String[] args) throws InterruptedException, BrokenBarrierException {
         System.out.println("Welcome to the Card Game!");
         System.out.println(new File(".").getAbsolutePath());
-        int numPlayers=getNumberOfPlayers();
-        CardGame game = new CardGame(numPlayers,getInputPack(numPlayers)); //do we want to put get input pack in the cardgame constructor instead of passing in num players twice?
+        int numPlayers = getNumberOfPlayers();
+        barrier = new CyclicBarrier(numPlayers + 1);
+        CardGame game = new CardGame(numPlayers, getInputPack(numPlayers));
         System.out.println("Dealing cards...");
         game.dealCards(game.cards, game.players, game.decks);
         for (Player player : game.players) {
-            new Thread(player).start(); //because thread1 will run first, it wont see that thread 3 has an immediate winner. therefore it will do its whole go. this is where we need interrupt        }
+            new Thread(player).start(); // because thread1 will run first, it wont see that thread 3 has an immediate
+                                        // winner. therefore it will do its whole go. this is where we need interrupt }
         }
+        barrier.await();
     }
-    
-    public CardGame(int numPlayers, Card[] cards)
-    {
+
+    public CardGame(int numPlayers, Card[] cards) {
         // Initialise the number of players
         NUMBER_OF_PLAYERS = numPlayers;
         this.cards = cards;
         String time = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
-        gameLocation = "./games/"+time;
+        gameLocation = "./games/" + time;
 
         new File(gameLocation).mkdirs();
         // Initialise the decks
         decks = new CardDeck[NUMBER_OF_PLAYERS];
         for (int i = 0; i < decks.length; i++) {
-            decks[i] = new CardDeck(i+1);
+            decks[i] = new CardDeck(i + 1);
         }
         players = new Player[NUMBER_OF_PLAYERS];
         for (int i = 0; i < players.length; i++) {
-            players[i] = new Player(i+1,decks[i],decks[(i+1)%NUMBER_OF_PLAYERS]);
+            players[i] = new Player(i + 1, decks[i], decks[(i + 1) % NUMBER_OF_PLAYERS]);
         }
     }
-    
-    public static int getNumberOfPlayers(){
-        int numPlayers=0;
-        while(numPlayers<2){
+
+    /**
+     * @return int
+     */
+    public static int getNumberOfPlayers() {
+        int numPlayers = 0;
+        while (numPlayers < 2) {
             System.out.println("Enter the number of players (must be greater than 1): ");
-            if(scanner.hasNextInt()){
+            if (scanner.hasNextInt()) {
                 numPlayers = scanner.nextInt();
-                if (numPlayers<2) {
+                if (numPlayers < 2) {
                     System.out.println("ERROR: Number of players must be greater than 1");
                 }
-            }else{
+            } else {
                 System.out.println("ERROR: Input must be an integer greater than 1");
                 scanner.next();
             }
         }
         return numPlayers;
     }
-    
-    public static Card[] getInputPack(int numPlayers){
+
+    /**
+     * @param numPlayers
+     * @return Card[]
+     */
+    public static Card[] getInputPack(int numPlayers) {
         String packLocation;
-        Card[] pack =  new Card[numPlayers];
+        Card[] pack = new Card[numPlayers];
         scanner.nextLine();
-        while(true){
+        while (true) {
             System.out.println("Enter the location of the pack file: ");
-            if (scanner.hasNextLine()){
+            if (scanner.hasNextLine()) {
                 packLocation = scanner.nextLine();
-                if(packLocation.endsWith(".txt") && isValidPackFile(packLocation, numPlayers)){
+                if (packLocation.endsWith(".txt") && isValidPackFile(packLocation, numPlayers)) {
                     pack = readInPack(packLocation, numPlayers);
                     break;
-                }
-                else if(!packLocation.endsWith(".txt")){
+                } else if (!packLocation.endsWith(".txt")) {
                     System.out.println("ERROR: File must be a .txt file");
                 }
             }
@@ -109,15 +132,20 @@ public class CardGame{
         return pack;
     }
 
+    /**
+     * @param packLocation
+     * @param numPlayers
+     * @return Card[]
+     */
     public static Card[] readInPack(String packLocation, int numPlayers) {
-        Card[] pack = new Card[numPlayers*8];
+        Card[] pack = new Card[numPlayers * 8];
         // Read in the contents of the file at packLocation into the array pack
         try {
             File file = new File(packLocation);
             BufferedReader br = new BufferedReader(new FileReader(file));
             String line;
-            int i=0;
-            while((line = br.readLine()) != null){
+            int i = 0;
+            while ((line = br.readLine()) != null) {
                 pack[i] = new Card(Integer.parseInt(line));
                 i++;
             }
@@ -128,17 +156,21 @@ public class CardGame{
         return pack;
     }
 
-    public static boolean isValidPackFile(String packLocation, int numPlayers)
-    {
+    /**
+     * @param packLocation
+     * @param numPlayers
+     * @return boolean
+     */
+    public static boolean isValidPackFile(String packLocation, int numPlayers) {
         File file = new File(packLocation);
-        if (file.exists() && file.isFile()){
-            try (BufferedReader reader=new BufferedReader(new FileReader(packLocation))){
+        if (file.exists() && file.isFile()) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(packLocation))) {
                 String line;
                 int lineCount = 0;
-                while((line=reader.readLine())!=null){
+                while ((line = reader.readLine()) != null) {
                     try {
                         int num = Integer.parseInt(line);
-                        if (num<=0){
+                        if (num <= 0) {
                             System.out.println("ERROR: Pack file contains a non-positive integer");
                             return false;
                         }
@@ -148,18 +180,17 @@ public class CardGame{
                         return false;
                     }
                 }
-                if(lineCount==numPlayers*8){
+                if (lineCount == numPlayers * 8) {
                     return true;
-                }else{
-                    System.out.println("ERROR: There are not " + 8*numPlayers + " cards in the pack file");
+                } else {
+                    System.out.println("ERROR: There are not " + 8 * numPlayers + " cards in the pack file");
                     return false;
                 }
-            }catch(IOException e){
+            } catch (IOException e) {
                 System.out.println("ERROR: Could not read pack file");
                 return false;
             }
-        }
-        else { 
+        } else {
             System.out.println("ERROR: Pack file does not exist");
             return false;
         }

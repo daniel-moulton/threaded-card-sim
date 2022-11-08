@@ -1,5 +1,7 @@
 {
     "java.test.config": {
         "workingDirectory": "/Users/danielmoulton/UniDocs/Year 2/Term 1/SoftwareDev/CA/threaded-card-sim"
-    }
+    },
+    "java.format.settings.url": "eclipse-formatter.xml",
+    "java.checkstyle.configuration": "/google_checks.xml"
 }

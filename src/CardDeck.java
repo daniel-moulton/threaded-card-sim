@@ -27,22 +27,42 @@ public class CardDeck{
             }
         }
 
+        
+        /** 
+         * @return int
+         */
         public int getDeckNumber(){
                 return DECK_NUMBER;
         }
 
+        
+        /** 
+         * @param card
+         */
         public void insertCard(Card card){
                 contents.add(card);
         }
 
+        
+        /** 
+         * @return Card
+         */
         public Card drawCard(){
                 return contents.remove();
         }
 
+        
+        /** 
+         * @return int
+         */
         public int getDeckLength(){
                 return contents.size();
         }
 
+        
+        /** 
+         * @return String
+         */
         private String getDeckContentsAsString(){
                 String output = "";
                 for(Card card : contents) { 
