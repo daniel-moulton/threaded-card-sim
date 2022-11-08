@@ -1,37 +1,45 @@
-package Test;
-import org.junit.Before;
-import org.junit.Test;
+package test;
 
-import src.CardDeck;
-import src.Card;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.After;
-import static org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.Test;
+import src.Card;
+import src.CardDeck;
 
-public class TestCardDeck{
-    private static CardDeck deck;
-    @Before
-    public void setUp() {
-        deck = new CardDeck(1);
-    }
+/**
+ * Test class for CardDeck.
+ *
+ * @author Daniel Moulton
+ * @author James Pilcher
+ */
+public class TestCardDeck {
+  private static CardDeck deck;
 
-    @Test
-    public void testCardDeckInsert() {
-        deck.insertCard(new Card(5));
-        assertEquals("Card values incorrect",5, deck.drawCard().getCardValue());
-    }
+  @Before
+  public void setUp() {
+    deck = new CardDeck(1);
+  }
 
-    @Test
-    public void testCardDeckRemove() {
-        deck.insertCard(new Card(5));
-        deck.insertCard(new Card(6));
-        deck.insertCard(new Card(7));
-        deck.insertCard(new Card(8));
-        Card removed=deck.drawCard();
-        assertEquals("Card values incorrect",5, removed.getCardValue());
-    }
-    @After
-    public void tearDown() {
-        deck = null;
-    }
+  @Test
+  public void testCardDeckInsert() {
+    deck.insertCard(new Card(5));
+    assertEquals("Card values incorrect", 5, deck.drawCard().getCardValue());
+  }
+
+  @Test
+  public void testCardDeckRemove() {
+    deck.insertCard(new Card(5));
+    deck.insertCard(new Card(6));
+    deck.insertCard(new Card(7));
+    deck.insertCard(new Card(8));
+    Card removed = deck.drawCard();
+    assertEquals("Card values incorrect", 5, removed.getCardValue());
+  }
+
+  @After
+  public void tearDown() {
+    deck = null;
+  }
 }
