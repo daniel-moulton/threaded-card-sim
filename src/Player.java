@@ -174,16 +174,7 @@ public class Player implements Runnable {
                 gameWon();
                 break;
             }
-
-<<<<<<< HEAD
-            while (deckDrawnFrom.getDeckLength() == 0 && CardGame.winningPlayer.get()==0){
                 //System.out.println("Player " + PLAYER_NUMBER + " waiting for deck " + deckDrawnFrom.getDeckNumber() + " to be refilled");
-                try {
-                    synchronized (OBJECT_LOCK) {
-                        OBJECT_LOCK.wait();
-                    }
-                } catch (InterruptedException e) {} //handle? idk
-=======
             while (deckDrawnFrom.getDeckLength() == 0 && CardGame.winningPlayer.get() == 0) {
                 try {
                     synchronized (OBJECT_LOCK) {
@@ -193,9 +184,8 @@ public class Player implements Runnable {
                     }
                 } catch (InterruptedException e) {
                 }
->>>>>>> f2eca835e8199479c31e7236a3f9983835392dd8
             }
-            if (CardGame.winningPlayer.get() != 0) { // dont bother waiting for new cards if its over
+            if (CardGame.winningPlayer.get()!=0){ //dont bother drawing new cards if its over
                 break;
             }
             Card drawnCard = drawCard();
@@ -227,5 +217,5 @@ public class Player implements Runnable {
         }
         deckDrawnFrom.printContentsToFile();
         outputter.close();
+        }
     }
-}
