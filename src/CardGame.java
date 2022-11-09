@@ -32,14 +32,14 @@ public class CardGame {
    *
    * @param numPlayers the number of players in the game
    */
-  public CardGame(int numPlayers) {
+  public CardGame(int numPlayers, Card[] cards) {
     this.numPlayers = numPlayers;
+    this.cards = cards;
     // Gets the current date and time in specified format to use as folder for output files.
     String time = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
     gameLocation = "./games/" + time;
     new File(gameLocation).mkdirs();
 
-    cards = getInputPack(numPlayers);
     decks = new CardDeck[numPlayers];
     for (int i = 0; i < decks.length; i++) {
       decks[i] = new CardDeck(i + 1);
@@ -207,11 +207,13 @@ public class CardGame {
     System.out.println("Welcome to the Card Game!");
     int numPlayers = getNumberOfPlayers();
     barrier = new CyclicBarrier(numPlayers + 1);
-    CardGame game = new CardGame(numPlayers);
+    Card[] cards = getInputPack(numPlayers);
+    CardGame game = new CardGame(numPlayers, cards);
     System.out.println("Dealing cards...");
     game.dealCards(game.cards, game.players, game.decks);
     for (Player player : game.players) {
       new Thread(player).start();
+      System.out.println(player.getPlayerName() + " has been dealt " + player.handToString());
     }
     // Final barrier await to release all players at as close to the same time as possible
     barrier.await();
