@@ -33,13 +33,13 @@ public class Player implements Runnable {
    */
   public Player(int playerNumber, CardDeck deckDrawnFrom, CardDeck deckInsertedTo) {
     this.playerNumber = playerNumber;
-    this.playerName = "player" + playerNumber;
+    this.playerName = "Player " + playerNumber;
     this.hand = new Card[4];
     this.deckDrawnFrom = deckDrawnFrom;
     this.deckInsertedTo = deckInsertedTo;
     try {
       this.outputter = new PrintStream(new File(CardGame.gameLocation 
-      + "/" + playerName + "_output.txt"));
+      + "/player" + playerNumber + "_output.txt"));
     } catch (FileNotFoundException e) {
       e.printStackTrace();
     }
@@ -54,7 +54,7 @@ public class Player implements Runnable {
   public void initialHand(Card card, int handPosition) {
     hand[handPosition] = card;
     if (handPosition == 3) {
-      appendToFile("Player " + playerNumber + " initial hand is " + handToString());
+      appendToFile(playerName + " initial hand is " + handToString());
       // Check if the player has won initially.
       if (hasWon()) {
         playerWon();
@@ -91,7 +91,7 @@ public class Player implements Runnable {
    *
    * @return string of card values
    */
-  private String handToString() {
+  public String handToString() {
     String stringHand = "";
     for (Card card : hand) {
       if (card != null) {
@@ -109,7 +109,7 @@ public class Player implements Runnable {
    */
   public Card drawCard() {
     Card card = deckDrawnFrom.drawCard();
-    appendToFile("Player " + playerNumber + " draws a " + card.getCardValue() + " from deck "
+    appendToFile(playerName + " draws a " + card.getCardValue() + " from deck "
         + deckDrawnFrom.getDeckNumber());
     return card;
   }
@@ -127,7 +127,7 @@ public class Player implements Runnable {
       }
     }
     deckInsertedTo.insertCard(card);
-    appendToFile("Player " + playerNumber + " discards a " + card.getCardValue() + " to deck "
+    appendToFile(playerName + " discards a " + card.getCardValue() + " to deck "
         + deckInsertedTo.getDeckNumber());
   }
 
@@ -148,7 +148,7 @@ public class Player implements Runnable {
         break;
       }
     }
-    appendToFile("Player " + playerNumber + " current hand is " + handToString());
+    appendToFile(playerName + " current hand is " + handToString());
   }
 
   /**
@@ -183,7 +183,7 @@ public class Player implements Runnable {
     synchronized (OBJECT_LOCK) {
       OBJECT_LOCK.notifyAll();
     }
-    System.out.println("Player " + playerNumber + " wins!");
+    System.out.println(playerName + " wins!");
   }
 
   @Override
@@ -204,7 +204,7 @@ public class Player implements Runnable {
       while (deckDrawnFrom.getDeckLength() == 0 && CardGame.winningPlayer.get() == 0) {
         try {
           synchronized (OBJECT_LOCK) {
-            System.out.println("Player " + playerNumber + " waiting for deck "
+            System.out.println(playerName + " waiting for deck "
                 + deckDrawnFrom.getDeckNumber() + " to be filled");
             OBJECT_LOCK.wait();
           }
@@ -228,17 +228,17 @@ public class Player implements Runnable {
     }
     int winnerNumber = CardGame.winningPlayer.get();
     if (winnerNumber == playerNumber) {
-      appendToFile("Player " + playerNumber + " wins");
+      appendToFile(playerName + " wins");
     } else {
       appendToFile("Player " + winnerNumber + " has informed Player " + playerNumber 
           + " that Player " + winnerNumber + " has won");
     }
-    appendToFile("Player " + playerNumber + " exits");
+    appendToFile(playerName + " exits");
 
     if (winnerNumber == playerNumber) {
-      appendToFile("Player " + playerNumber + " final hand: " + handToString());
+      appendToFile(playerName + " final hand: " + handToString());
     } else {
-      appendToFile("Player " + playerNumber + " hand: " + handToString());
+      appendToFile(playerName + " hand: " + handToString());
     }
     deckDrawnFrom.printContentsToFile();
     outputter.close();
