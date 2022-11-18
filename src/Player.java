@@ -54,7 +54,12 @@ public class Player implements Runnable {
   public void initialHand(Card card, int handPosition) {
     hand[handPosition] = card;
     if (handPosition == 3) {
-      appendToFile(playerName + " initial hand is " + handToString());
+      try {
+        appendToFile(playerName + " initial hand is " + handToString());
+      } catch (NullPointerException e)
+      {
+        e.printStackTrace();
+      }
       // Check if the player has won initially.
       if (hasWon()) {
         playerWon();
@@ -69,7 +74,7 @@ public class Player implements Runnable {
    * the card is added to the queue of discardables which contains all cards in the hand that can 
    * be discarded in future turns.
    */
-  private void findDiscardables() {
+  public void findDiscardables() {
     for (int i = 0; i < hand.length; i++) {
       if (hand[i].getCardValue() != playerNumber) {
         discardables.add(hand[i]);
@@ -77,12 +82,16 @@ public class Player implements Runnable {
     }
   }
 
+  public Queue<Card> getDiscardables() {
+    return discardables;
+  }
+
   /**
    * Appends the given string to the player's output file.
    *
    * @param output string to append
    */
-  private void appendToFile(String output) {
+  public void appendToFile(String output) {
     outputter.println(output);
   }
 
