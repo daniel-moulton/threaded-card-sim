@@ -25,7 +25,7 @@ public class CardGame {
   public Player[] players;
   public CardDeck[] decks;
   public static AtomicInteger winningPlayer = new AtomicInteger();
-  public static CyclicBarrier barrier;
+  // public static CyclicBarrier barrier;
 
   /**
    * Constructor for the CardGame class.
@@ -35,7 +35,8 @@ public class CardGame {
   public CardGame(int numPlayers, Card[] cards) {
     this.numPlayers = numPlayers;
     this.cards = cards;
-    // Gets the current date and time in specified format to use as folder for output files.
+    // Gets the current date and time in specified format to use as folder for
+    // output files.
     String time = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
     gameLocation = "./games/" + time;
     new File(gameLocation).mkdirs();
@@ -49,15 +50,12 @@ public class CardGame {
       players[i] = new Player(i + 1, decks[i], decks[(i + 1) % numPlayers]);
     }
   }
-  
+
   /**
-   * Deals all of the cards from the pack to players and then decks in round-robin fashion.
-   *
-   * @param cards array of cards in the game
-   * @param players array of players in the game 
-   * @param decks array of decks in the game
+   * Deals all of the cards from the pack to players and then decks in round-robin
+   * fashion.
    */
-  public void dealCards(Card[] cards, Player[] players, CardDeck[] decks) {
+  public void dealCards() {
     // Index of which card we're dealing
     int cardIndex = 0;
     // For each loop of giving each player a card
@@ -77,9 +75,8 @@ public class CardGame {
     }
   }
 
-
   /**
-   * Gets the number of players to play the game from the user 
+   * Gets the number of players to play the game from the user
    * looping until an integer above 1 is entered.
    *
    * @return the number of players playing the game
@@ -197,25 +194,44 @@ public class CardGame {
   }
 
   /**
+   * Starts the threads of each player.
+   */
+  public void startPlayerThreads() {
+    for (Player player : players) {
+      new Thread(player).start();
+    }
+  }
+
+  // /**
+  //  * Called once every player has called await on the barrier, releasing the barrier.
+  //  *
+  //  * @throws InterruptedException
+  //  * @throws BrokenBarrierException
+  //  */
+  // public void releaseBarrier() throws InterruptedException,
+  //     BrokenBarrierException {
+  //   barrier.await();
+  // }
+
+  /**
    * Main method called when starting the game.
    *
    * @param args the command line arguments
-   * @throws InterruptedException if the thread is interrupted
+   * @throws InterruptedException   if the thread is interrupted
    * @throws BrokenBarrierException if the barrier is broken
    */
   public static void main(String[] args) throws InterruptedException, BrokenBarrierException {
     System.out.println("Welcome to the Card Game!");
     int numPlayers = getNumberOfPlayers();
-    barrier = new CyclicBarrier(numPlayers + 1);
+    // barrier = new CyclicBarrier(numPlayers + 1);
     Card[] cards = getInputPack(numPlayers);
     CardGame game = new CardGame(numPlayers, cards);
     System.out.println("Dealing cards...");
-    game.dealCards(game.cards, game.players, game.decks);
+    game.dealCards();
     for (Player player : game.players) {
       new Thread(player).start();
-      System.out.println(player.getPlayerName() + " has been dealt " + player.handToString());
+      System.out.println(player.getPlayerName() + " has been dealt cards " + player.handToString());
     }
-    // Final barrier await to release all players at as close to the same time as possible
-    barrier.await();
+    // game.releaseBarrier();  
   }
 }

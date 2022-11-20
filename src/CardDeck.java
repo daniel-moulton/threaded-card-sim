@@ -82,7 +82,7 @@ public class CardDeck {
    *
    * @return string of card values
    */
-  private String getDeckContentsAsString() {
+  public String getDeckContentsAsString() {
     String output = "";
     for (Card card : contents) { 
       output += card.getCardValue() + " "; 

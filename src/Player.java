@@ -195,15 +195,19 @@ public class Player implements Runnable {
     System.out.println(playerName + " wins!");
   }
 
+  public int getHandSize(){
+    return hand.length;
+  }
+
   @Override
   public void run() {
-    try {
-      CardGame.barrier.await();
-    } catch (InterruptedException e1) {
-      e1.printStackTrace();
-    } catch (BrokenBarrierException e1) {
-      e1.printStackTrace();
-    }
+    // try {
+    //   CardGame.barrier.await();
+    // } catch (InterruptedException e1) {
+    //   e1.printStackTrace();
+    // } catch (BrokenBarrierException e1) {
+    //   e1.printStackTrace();
+    // }
     while (CardGame.winningPlayer.get() == 0) {
       if (hasWon()) {
         playerWon();
