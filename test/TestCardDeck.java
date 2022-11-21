@@ -22,6 +22,11 @@ public class TestCardDeck {
     deck = new CardDeck(1);
   }
 
+  @Test 
+  public void testGetDeckLength(){
+    assertEquals("Deck not empty", 0, deck.getDeckLength());
+  }
+
   @Test
   public void testCardDeckInsert() {
     deck.insertCard(new Card(5));
@@ -37,6 +42,7 @@ public class TestCardDeck {
     Card removed = deck.drawCard();
     assertEquals("Card values incorrect", 5, removed.getCardValue());
   }
+
 
   @After
   public void tearDown() {
