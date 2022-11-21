@@ -24,7 +24,6 @@ public class CardGame {
   public Player[] players;
   public CardDeck[] decks;
   public static AtomicInteger winningPlayer = new AtomicInteger();
-  // public static CyclicBarrier barrier;
 
   /**
    * Constructor for the CardGame class.

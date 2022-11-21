@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.concurrent.BrokenBarrierException;
 
 /**
  * Represents a player in the game.
@@ -194,13 +193,6 @@ public class Player implements Runnable {
 
   @Override
   public void run() {
-    // try {
-    // CardGame.barrier.await();
-    // } catch (InterruptedException e1) {
-    // e1.printStackTrace();
-    // } catch (BrokenBarrierException e1) {
-    // e1.printStackTrace();
-    // }
     while (CardGame.winningPlayer.get() == 0) {
       if (hasWon()) {
         break;
