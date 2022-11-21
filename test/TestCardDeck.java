@@ -2,6 +2,8 @@ package test;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.FileNotFoundException;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,7 +21,7 @@ public class TestCardDeck {
   private static CardDeck deck;
 
   @Before
-  public void setUp() {
+  public void setUp() throws FileNotFoundException {
     CardGame.setGameLocation();
     deck = new CardDeck(1);
   }

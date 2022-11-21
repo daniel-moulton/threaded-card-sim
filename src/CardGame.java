@@ -237,7 +237,7 @@ public class CardGame {
     game.dealCards();
     for (Player player : game.players) {
       new Thread(player).start();
-      System.out.println(player.getPlayerName() + " has been dealt cards " + player.handToString());
+      //System.out.println(player.getPlayerName() + " has been dealt cards " + player.handToString());
     }
     // game.releaseBarrier();
   }

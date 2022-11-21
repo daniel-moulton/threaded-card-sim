@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.io.FileNotFoundException;
 import java.util.concurrent.BrokenBarrierException;
 import org.junit.After;
 import org.junit.Before;
@@ -76,7 +77,7 @@ public class TestCardGame {
   }
 
   @Test
-  public void testDealCards() {
+  public void testDealCards() throws FileNotFoundException {
     // Each player and deck should have the cards [1,2,3,4] in that order
     cards = CardGame.readInPack("test/valid5PlayersPackIdenticalHand.txt", numPlayers);
     CardGame game = new CardGame(5, cards);
@@ -92,7 +93,7 @@ public class TestCardGame {
   }
 
   @Test
-  public void testImmediateWinner() {
+  public void testImmediateWinner() throws FileNotFoundException {
     cards = CardGame.readInPack("test/immediateWinner100Players.txt", 100);
     CardGame game = new CardGame(100, cards);
     game.dealCards();
