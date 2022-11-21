@@ -217,8 +217,6 @@ public class Player implements Runnable {
       while (deckDrawnFrom.getDeckLength() == 0 && CardGame.winningPlayer.get() == 0) {
         try {
           synchronized (OBJECT_LOCK) {
-            System.out.println(playerName + " waiting for deck "
-                + deckDrawnFrom.getDeckNumber() + " to be filled");
             OBJECT_LOCK.wait();
           }
         } catch (InterruptedException e) {
