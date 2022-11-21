@@ -61,9 +61,7 @@ public class Player implements Runnable {
         e.printStackTrace();
       }
       // Check if the player has won initially.
-      if (hasWon()) {
-        playerWon();
-      } else {
+      if (!hasWon()) {
         findDiscardables();
       }
     }
@@ -171,6 +169,11 @@ public class Player implements Runnable {
         return false;
       }
     }
+    CardGame.winningPlayer.set(playerNumber);
+    synchronized (OBJECT_LOCK) {
+      OBJECT_LOCK.notifyAll();
+    }
+    System.out.println(playerName + " wins!");
     return true;
   }
 
@@ -187,13 +190,6 @@ public class Player implements Runnable {
    * When they win the game, sets the atomic variable winning player to winning player's number.
    * Then wakes up all threads as the game is now over and prints to console which player won.
    */
-  public void playerWon() {
-    CardGame.winningPlayer.set(playerNumber);
-    synchronized (OBJECT_LOCK) {
-      OBJECT_LOCK.notifyAll();
-    }
-    System.out.println(playerName + " wins!");
-  }
 
   public int getHandSize(){
     return hand.length;
@@ -210,7 +206,6 @@ public class Player implements Runnable {
     // }
     while (CardGame.winningPlayer.get() == 0) {
       if (hasWon()) {
-        playerWon();
         break;
       }
       // Player can go as long as the deck they draw from is not empty and no one has won the game.
@@ -230,7 +225,6 @@ public class Player implements Runnable {
       removeMostDiscardable();
       updateHand(drawnCard);
       if (hasWon()) {
-        playerWon();
         break;
       }
       synchronized (OBJECT_LOCK) {
