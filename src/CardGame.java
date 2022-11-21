@@ -37,9 +37,6 @@ public class CardGame {
     this.cards = cards;
     // Gets the current date and time in specified format to use as folder for
     // output files.
-    String time = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
-    gameLocation = "./games/" + time;
-    new File(gameLocation).mkdirs();
 
     decks = new CardDeck[numPlayers];
     for (int i = 0; i < decks.length; i++) {
@@ -49,6 +46,12 @@ public class CardGame {
     for (int i = 0; i < players.length; i++) {
       players[i] = new Player(i + 1, decks[i], decks[(i + 1) % numPlayers]);
     }
+  }
+
+  public static void setGameLocation() {
+    String time = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
+    gameLocation = "./games/" + time;
+    new File(gameLocation).mkdirs();
   }
 
   /**
@@ -203,14 +206,15 @@ public class CardGame {
   }
 
   // /**
-  //  * Called once every player has called await on the barrier, releasing the barrier.
-  //  *
-  //  * @throws InterruptedException
-  //  * @throws BrokenBarrierException
-  //  */
+  // * Called once every player has called await on the barrier, releasing the
+  // barrier.
+  // *
+  // * @throws InterruptedException
+  // * @throws BrokenBarrierException
+  // */
   // public void releaseBarrier() throws InterruptedException,
-  //     BrokenBarrierException {
-  //   barrier.await();
+  // BrokenBarrierException {
+  // barrier.await();
   // }
 
   /**
@@ -223,7 +227,7 @@ public class CardGame {
   public static void main(String[] args) throws InterruptedException, BrokenBarrierException {
     System.out.println("Welcome to the Card Game!");
     int numPlayers = getNumberOfPlayers();
-    // barrier = new CyclicBarrier(numPlayers + 1);
+    setGameLocation();
     Card[] cards = getInputPack(numPlayers);
     CardGame game = new CardGame(numPlayers, cards);
     System.out.println("Dealing cards...");
@@ -232,6 +236,6 @@ public class CardGame {
       new Thread(player).start();
       System.out.println(player.getPlayerName() + " has been dealt cards " + player.handToString());
     }
-    // game.releaseBarrier();  
+    // game.releaseBarrier();
   }
 }

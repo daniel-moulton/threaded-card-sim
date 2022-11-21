@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import src.Card;
 import src.CardDeck;
+import src.CardGame;
 
 /**
  * Test class for CardDeck.
@@ -19,6 +20,7 @@ public class TestCardDeck {
 
   @Before
   public void setUp() {
+    CardGame.setGameLocation();
     deck = new CardDeck(1);
   }
 
@@ -47,5 +49,6 @@ public class TestCardDeck {
   @After
   public void tearDown() {
     deck = null;
+    
   }
 }

@@ -10,6 +10,7 @@ import org.junit.Test;
 import src.Card;
 import src.CardDeck;
 import src.Player;
+import src.CardGame;
 
 /**
  * Test class for Player.
@@ -30,6 +31,7 @@ public class TestPlayer {
   public void setUp() {
     deckDrawnFrom = new CardDeck(1);
     deckInsertedTo = new CardDeck(2);
+    CardGame.setGameLocation();
     player = new Player(1, deckDrawnFrom, deckInsertedTo);
     card1 = new Card(1);
     card2 = new Card(2);
