@@ -2,6 +2,7 @@ package src;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -31,8 +32,9 @@ public class CardGame {
    * Constructor for the CardGame class.
    *
    * @param numPlayers the number of players in the game
+   * @throws FileNotFoundException
    */
-  public CardGame(int numPlayers, Card[] cards) {
+  public CardGame(int numPlayers, Card[] cards) throws FileNotFoundException {
     this.numPlayers = numPlayers;
     this.cards = cards;
     // Gets the current date and time in specified format to use as folder for
@@ -223,8 +225,9 @@ public class CardGame {
    * @param args the command line arguments
    * @throws InterruptedException   if the thread is interrupted
    * @throws BrokenBarrierException if the barrier is broken
+   * @throws FileNotFoundException
    */
-  public static void main(String[] args) throws InterruptedException, BrokenBarrierException {
+  public static void main(String[] args) throws InterruptedException, BrokenBarrierException, FileNotFoundException {
     System.out.println("Welcome to the Card Game!");
     int numPlayers = getNumberOfPlayers();
     setGameLocation();

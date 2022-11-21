@@ -24,16 +24,13 @@ public class CardDeck {
    * Constructor for the CardDeck class.
    *
    * @param deckNumber the number of the deck
+   * @throws FileNotFoundException
    */
-  public CardDeck(int deckNumber) {
+  public CardDeck(int deckNumber) throws FileNotFoundException {
     contents = new LinkedList<Card>();
     this.deckNumber = deckNumber;
-    try {
-      this.outputter = new PrintStream(new File(CardGame.gameLocation + "/" 
-        + "deck" + deckNumber + "_output.txt"));
-    } catch (FileNotFoundException e) {
-      e.printStackTrace();
-    }
+    this.outputter = new PrintStream(new File(CardGame.gameLocation + "/" 
+      + "deck" + deckNumber + "_output.txt"));
   }
 
 

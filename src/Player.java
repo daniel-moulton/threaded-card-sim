@@ -30,19 +30,16 @@ public class Player implements Runnable {
    * @param playerNumber   the number of the player
    * @param deckDrawnFrom  the deck the player draws from
    * @param deckInsertedTo the deck the player inserts into
+   * @throws FileNotFoundException
    */
-  public Player(int playerNumber, CardDeck deckDrawnFrom, CardDeck deckInsertedTo) {
+  public Player(int playerNumber, CardDeck deckDrawnFrom, CardDeck deckInsertedTo) throws FileNotFoundException {
     this.playerNumber = playerNumber;
     this.playerName = "Player " + playerNumber;
     this.hand = new Card[4];
     this.deckDrawnFrom = deckDrawnFrom;
     this.deckInsertedTo = deckInsertedTo;
-    try {
-      this.outputter = new PrintStream(new File(CardGame.gameLocation
-          + "/player" + playerNumber + "_output.txt"));
-    } catch (FileNotFoundException e) {
-      e.printStackTrace();
-    }
+    this.outputter = new PrintStream(new File(CardGame.gameLocation
+      + "/player" + playerNumber + "_output.txt"));
   }
 
   /**
@@ -54,11 +51,7 @@ public class Player implements Runnable {
   public void initialHand(Card card, int handPosition) {
     hand[handPosition] = card;
     if (handPosition == 3) {
-      try {
-        appendToFile(playerName + " initial hand is " + handToString());
-      } catch (NullPointerException e) {
-        e.printStackTrace();
-      }
+      appendToFile(playerName + " initial hand is " + handToString());
       // Check if the player has won initially.
       if (hasWon()) {
         playerWon();
@@ -120,12 +113,8 @@ public class Player implements Runnable {
    */
   public Card drawCard() {
     Card card = deckDrawnFrom.drawCard();
-    try {
-      appendToFile(playerName + " draws a " + card.getCardValue() + " from deck "
-          + deckDrawnFrom.getDeckNumber());
-    } catch (NullPointerException e) {
-      e.printStackTrace();
-    }
+    appendToFile(playerName + " draws a " + card.getCardValue() + " from deck "
+        + deckDrawnFrom.getDeckNumber());
     return card;
   }
 
@@ -144,12 +133,8 @@ public class Player implements Runnable {
       }
     }
     deckInsertedTo.insertCard(card);
-    try {
-      appendToFile(playerName + " discards a " + card.getCardValue() + " to deck "
-          + deckInsertedTo.getDeckNumber());
-    } catch (NullPointerException e) {
-      e.printStackTrace();
-    }
+    appendToFile(playerName + " discards a " + card.getCardValue() + " to deck "
+        + deckInsertedTo.getDeckNumber());
   }
 
   /**
@@ -170,11 +155,7 @@ public class Player implements Runnable {
         break;
       }
     }
-    try {
-      appendToFile(playerName + " current hand is " + handToString());
-    } catch (NullPointerException e) {
-      e.printStackTrace();
-    }
+    appendToFile(playerName + " current hand is " + handToString());
   }
 
   /**

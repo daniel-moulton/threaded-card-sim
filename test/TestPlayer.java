@@ -2,6 +2,7 @@ package test;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.Queue;
 import org.junit.After;
@@ -28,10 +29,10 @@ public class TestPlayer {
   private static Card card4;
 
   @Before
-  public void setUp() {
+  public void setUp() throws FileNotFoundException {
+    CardGame.setGameLocation();
     deckDrawnFrom = new CardDeck(1);
     deckInsertedTo = new CardDeck(2);
-    CardGame.setGameLocation();
     player = new Player(1, deckDrawnFrom, deckInsertedTo);
     card1 = new Card(1);
     card2 = new Card(2);
@@ -60,7 +61,6 @@ public class TestPlayer {
     player.initialHand(card3, 2);
     player.initialHand(card4, 3);
     player.removeMostDiscardable();
-    System.out.println(player.handToString());
     assertEquals("The most discardable card was not removed",
         "1 3 4 ", player.handToString());
   }
