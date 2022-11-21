@@ -69,8 +69,10 @@ public class Player implements Runnable {
   }
 
   /**
-   * Checks each card in the hand and if the denomination is not equal to the player's number
-   * the card is added to the queue of discardables which contains all cards in the hand that can
+   * Checks each card in the hand and if the denomination is not equal to the
+   * player's number
+   * the card is added to the queue of discardables which contains all cards in
+   * the hand that can
    * be discarded in future turns.
    */
   public void findDiscardables() {
@@ -119,7 +121,7 @@ public class Player implements Runnable {
   public Card drawCard() {
     Card card = deckDrawnFrom.drawCard();
     try {
-      appendToFile(playerName + " drew " + card.getCardValue() + " from deck "
+      appendToFile(playerName + " draws a " + card.getCardValue() + " from deck "
           + deckDrawnFrom.getDeckNumber());
     } catch (NullPointerException e) {
       e.printStackTrace();
