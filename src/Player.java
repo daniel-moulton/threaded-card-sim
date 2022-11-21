@@ -27,8 +27,8 @@ public class Player implements Runnable {
   /**
    * Constructor for the Player class.
    *
-   * @param playerNumber the number of the player
-   * @param deckDrawnFrom the deck the player draws from
+   * @param playerNumber   the number of the player
+   * @param deckDrawnFrom  the deck the player draws from
    * @param deckInsertedTo the deck the player inserts into
    */
   public Player(int playerNumber, CardDeck deckDrawnFrom, CardDeck deckInsertedTo) {
@@ -38,8 +38,8 @@ public class Player implements Runnable {
     this.deckDrawnFrom = deckDrawnFrom;
     this.deckInsertedTo = deckInsertedTo;
     try {
-      this.outputter = new PrintStream(new File(CardGame.gameLocation 
-      + "/player" + playerNumber + "_output.txt"));
+      this.outputter = new PrintStream(new File(CardGame.gameLocation
+          + "/player" + playerNumber + "_output.txt"));
     } catch (FileNotFoundException e) {
       e.printStackTrace();
     }
@@ -48,7 +48,7 @@ public class Player implements Runnable {
   /**
    * Inserts the starting cards into the player's hand.
    *
-   * @param card the card to add to the player's hand
+   * @param card         the card to add to the player's hand
    * @param handPosition the position in the hand to add the card
    */
   public void initialHand(Card card, int handPosition) {
@@ -56,8 +56,7 @@ public class Player implements Runnable {
     if (handPosition == 3) {
       try {
         appendToFile(playerName + " initial hand is " + handToString());
-      } catch (NullPointerException e)
-      {
+      } catch (NullPointerException e) {
         e.printStackTrace();
       }
       // Check if the player has won initially.
@@ -71,7 +70,7 @@ public class Player implements Runnable {
 
   /**
    * Checks each card in the hand and if the denomination is not equal to the player's number
-   * the card is added to the queue of discardables which contains all cards in the hand that can 
+   * the card is added to the queue of discardables which contains all cards in the hand that can
    * be discarded in future turns.
    */
   public void findDiscardables() {
@@ -111,21 +110,28 @@ public class Player implements Runnable {
   }
 
   /**
-   * Draws the card at the top of the previous deck and appends to the player's output file
+   * Draws the card at the top of the previous deck and appends to the player's
+   * output file
    * the card they drew and from which deck.
    *
    * @return the card that was drawn
    */
   public Card drawCard() {
     Card card = deckDrawnFrom.drawCard();
-    appendToFile(playerName + " draws a " + card.getCardValue() + " from deck "
-        + deckDrawnFrom.getDeckNumber());
+    try {
+      appendToFile(playerName + " drew " + card.getCardValue() + " from deck "
+          + deckDrawnFrom.getDeckNumber());
+    } catch (NullPointerException e) {
+      e.printStackTrace();
+    }
     return card;
   }
 
   /**
-   * Gets the next card to discard from the queue of discardables and removes that card from 
-   * the player's hand. Then inserts the removed card into the next deck and appends to the
+   * Gets the next card to discard from the queue of discardables and removes that
+   * card from
+   * the player's hand. Then inserts the removed card into the next deck and
+   * appends to the
    * player's output file the card they discarded and into which deck.
    */
   public void removeMostDiscardable() {
@@ -136,12 +142,17 @@ public class Player implements Runnable {
       }
     }
     deckInsertedTo.insertCard(card);
-    appendToFile(playerName + " discards a " + card.getCardValue() + " to deck "
-        + deckInsertedTo.getDeckNumber());
+    try {
+      appendToFile(playerName + " discards a " + card.getCardValue() + " to deck "
+          + deckInsertedTo.getDeckNumber());
+    } catch (NullPointerException e) {
+      e.printStackTrace();
+    }
   }
 
   /**
-   * Loops through the player's hand and inserts the card drawn into the first empty slot.
+   * Loops through the player's hand and inserts the card drawn into the first
+   * empty slot.
    * Then checks if the card can be discarded or not in future turns.
    * And finally appends the player's current hand to their output file.
    *
@@ -161,7 +172,8 @@ public class Player implements Runnable {
   }
 
   /**
-   * Checks a player's hand to see if they have won by having four cards of the same value.
+   * Checks a player's hand to see if they have won by having four cards of the
+   * same value.
    *
    * @return true if the player has won, false otherwise
    */
@@ -184,8 +196,10 @@ public class Player implements Runnable {
   }
 
   /**
-   * When they win the game, sets the atomic variable winning player to winning player's number.
-   * Then wakes up all threads as the game is now over and prints to console which player won.
+   * When they win the game, sets the atomic variable winning player to winning
+   * player's number.
+   * Then wakes up all threads as the game is now over and prints to console which
+   * player won.
    */
   public void playerWon() {
     CardGame.winningPlayer.set(playerNumber);
@@ -195,25 +209,22 @@ public class Player implements Runnable {
     System.out.println(playerName + " wins!");
   }
 
-  public int getHandSize(){
-    return hand.length;
-  }
-
   @Override
   public void run() {
     // try {
-    //   CardGame.barrier.await();
+    // CardGame.barrier.await();
     // } catch (InterruptedException e1) {
-    //   e1.printStackTrace();
+    // e1.printStackTrace();
     // } catch (BrokenBarrierException e1) {
-    //   e1.printStackTrace();
+    // e1.printStackTrace();
     // }
     while (CardGame.winningPlayer.get() == 0) {
       if (hasWon()) {
         playerWon();
         break;
       }
-      // Player can go as long as the deck they draw from is not empty and no one has won the game.
+      // Player can go as long as the deck they draw from is not empty and no one has
+      // won the game.
       while (deckDrawnFrom.getDeckLength() == 0 && CardGame.winningPlayer.get() == 0) {
         try {
           synchronized (OBJECT_LOCK) {
@@ -243,7 +254,7 @@ public class Player implements Runnable {
     if (winnerNumber == playerNumber) {
       appendToFile(playerName + " wins");
     } else {
-      appendToFile("Player " + winnerNumber + " has informed Player " + playerNumber 
+      appendToFile("Player " + winnerNumber + " has informed Player " + playerNumber
           + " that Player " + winnerNumber + " has won");
     }
     appendToFile(playerName + " exits");
