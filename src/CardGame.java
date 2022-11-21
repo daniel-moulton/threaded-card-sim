@@ -7,8 +7,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Scanner;
-import java.util.concurrent.BrokenBarrierException;
-import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -199,35 +197,13 @@ public class CardGame {
   }
 
   /**
-   * Starts the threads of each player.
-   */
-  public void startPlayerThreads() {
-    for (Player player : players) {
-      new Thread(player).start();
-    }
-  }
-
-  // /**
-  // * Called once every player has called await on the barrier, releasing the
-  // barrier.
-  // *
-  // * @throws InterruptedException
-  // * @throws BrokenBarrierException
-  // */
-  // public void releaseBarrier() throws InterruptedException,
-  // BrokenBarrierException {
-  // barrier.await();
-  // }
-
-  /**
    * Main method called when starting the game.
    *
    * @param args the command line arguments
    * @throws InterruptedException   if the thread is interrupted
-   * @throws BrokenBarrierException if the barrier is broken
    * @throws FileNotFoundException
    */
-  public static void main(String[] args) throws InterruptedException, BrokenBarrierException, FileNotFoundException {
+  public static void main(String[] args) throws InterruptedException, FileNotFoundException {
     System.out.println("Welcome to the Card Game!");
     int numPlayers = getNumberOfPlayers();
     setGameLocation();
@@ -237,8 +213,6 @@ public class CardGame {
     game.dealCards();
     for (Player player : game.players) {
       new Thread(player).start();
-      //System.out.println(player.getPlayerName() + " has been dealt cards " + player.handToString());
     }
-    // game.releaseBarrier();
   }
 }

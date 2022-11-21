@@ -3,7 +3,6 @@ package test;
 import static org.junit.Assert.assertEquals;
 
 import java.io.FileNotFoundException;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,8 +25,8 @@ public class TestCardDeck {
     deck = new CardDeck(1);
   }
 
-  @Test 
-  public void testGetDeckLength(){
+  @Test
+  public void testGetDeckLength() {
     assertEquals("Deck not empty", 0, deck.getDeckLength());
   }
 
@@ -47,10 +46,9 @@ public class TestCardDeck {
     assertEquals("Card values incorrect", 5, removed.getCardValue());
   }
 
-
   @After
   public void tearDown() {
     deck = null;
-    
+
   }
 }

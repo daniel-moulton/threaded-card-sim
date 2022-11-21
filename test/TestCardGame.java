@@ -27,11 +27,7 @@ public class TestCardGame {
 
   @Before
   public void setUp() throws InterruptedException, BrokenBarrierException {
-    // game = new CardGame(5);
-    // game.startPlayerThreads();
-    // game.releaseBarrier();
     numPlayers = 5;
-    // game.releaseBarrier();
 
   }
 

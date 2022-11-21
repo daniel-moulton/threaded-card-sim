@@ -24,7 +24,7 @@ public class CardDeck {
    * Constructor for the CardDeck class.
    *
    * @param deckNumber the number of the deck
-   * @throws FileNotFoundException
+   * @throws FileNotFoundException if the directory cannot be found
    */
   public CardDeck(int deckNumber) throws FileNotFoundException {
     contents = new LinkedList<Card>();
