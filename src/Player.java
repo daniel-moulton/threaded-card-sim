@@ -160,7 +160,7 @@ public class Player implements Runnable {
    *
    * @param drawnCard the drawn card to be inserted into the hand
    */
-  private void updateHand(Card drawnCard) {
+  public void updateHand(Card drawnCard) {
     for (int i = 0; i < hand.length; i++) {
       if (hand[i] == null) {
         hand[i] = drawnCard;
@@ -170,7 +170,11 @@ public class Player implements Runnable {
         break;
       }
     }
-    appendToFile(playerName + " current hand is " + handToString());
+    try {
+      appendToFile(playerName + " current hand is " + handToString());
+    } catch (NullPointerException e) {
+      e.printStackTrace();
+    }
   }
 
   /**
