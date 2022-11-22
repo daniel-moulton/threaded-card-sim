@@ -10,8 +10,8 @@ import org.junit.Before;
 import org.junit.Test;
 import src.Card;
 import src.CardDeck;
-import src.Player;
 import src.CardGame;
+import src.Player;
 
 /**
  * Test class for Player.
@@ -76,11 +76,11 @@ public class TestPlayer {
   }
 
   @Test
-  public void updateHandDiscardableCard(){
-    player.initialHand(card1,0);
-    player.initialHand(new Card(100),1);
-    player.initialHand(card3,2);
-    player.initialHand(card4,3);
+  public void updateHandDiscardableCard() {
+    player.initialHand(card1, 0);
+    player.initialHand(new Card(100), 1);
+    player.initialHand(card3, 2);
+    player.initialHand(card4, 3);
     player.removeMostDiscardable();
     deckDrawnFrom.insertCard(card2);
     player.updateHand(player.drawCard());

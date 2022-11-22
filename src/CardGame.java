@@ -29,13 +29,11 @@ public class CardGame {
    * Constructor for the CardGame class.
    *
    * @param numPlayers the number of players in the game
-   * @throws FileNotFoundException
+   * @throws FileNotFoundException if the file does not exist
    */
   public CardGame(int numPlayers, Card[] cards) throws FileNotFoundException {
     this.numPlayers = numPlayers;
     this.cards = cards;
-    // Gets the current date and time in specified format to use as folder for
-    // output files.
 
     decks = new CardDeck[numPlayers];
     for (int i = 0; i < decks.length; i++) {
@@ -47,6 +45,10 @@ public class CardGame {
     }
   }
 
+  /**
+   * Creates the folder to store output files.
+   * The folder name is the current datetime.
+   */
   public static void setGameLocation() {
     String time = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
     gameLocation = "./games/" + time;
@@ -200,7 +202,7 @@ public class CardGame {
    *
    * @param args the command line arguments
    * @throws InterruptedException   if the thread is interrupted
-   * @throws FileNotFoundException
+   * @throws FileNotFoundException if the game output folder does not exist
    */
   public static void main(String[] args) throws InterruptedException, FileNotFoundException {
     System.out.println("Welcome to the Card Game!");

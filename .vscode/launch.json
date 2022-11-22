@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch JUnitTestRunner",
+            "request": "launch",
+            "mainClass": "test.JUnitTestRunner",
+            "projectName": "threaded-card-sim_2a286eee"
+        },
+        {
+            "type": "java",
             "name": "Launch Current File",
             "request": "launch",
             "mainClass": "${file}"

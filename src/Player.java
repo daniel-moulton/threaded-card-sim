@@ -29,16 +29,17 @@ public class Player implements Runnable {
    * @param playerNumber   the number of the player
    * @param deckDrawnFrom  the deck the player draws from
    * @param deckInsertedTo the deck the player inserts into
-   * @throws FileNotFoundException
+   * @throws FileNotFoundException if the game output folder does not exist
    */
-  public Player(int playerNumber, CardDeck deckDrawnFrom, CardDeck deckInsertedTo) throws FileNotFoundException {
+  public Player(int playerNumber, CardDeck deckDrawnFrom, CardDeck deckInsertedTo)
+      throws FileNotFoundException {
     this.playerNumber = playerNumber;
     this.playerName = "Player " + playerNumber;
     this.hand = new Card[4];
     this.deckDrawnFrom = deckDrawnFrom;
     this.deckInsertedTo = deckInsertedTo;
     this.outputter = new PrintStream(new File(CardGame.gameLocation
-      + "/player" + playerNumber + "_output.txt"));
+        + "/player" + playerNumber + "_output.txt"));
   }
 
   /**
