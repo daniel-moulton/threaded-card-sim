@@ -204,6 +204,7 @@ public class CardGame {
    */
   public static void main(String[] args) throws InterruptedException, FileNotFoundException {
     System.out.println("Welcome to the Card Game!");
+    System.out.println("Current working directory: " + System.getProperty("user.dir"));
     int numPlayers = getNumberOfPlayers();
     setGameLocation();
     Card[] cards = getInputPack(numPlayers);
