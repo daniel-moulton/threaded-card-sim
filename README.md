@@ -1,12 +1,6 @@
-## Multi-Threaded Card Playing Simulation
-### READ ME
+# Multi-Threaded Card Playing Simulation
 
-https://trello.com/b/jrJgzcUv/software-development
-
-https://docs.google.com/document/d/1EHDBRzF_yYuABc4__mT5wmKOGnLPbOQV/edit?usp=sharing&ouid=102621577467213799338&rtpof=true&sd=true
-
-
-# How to run our test suite:
+## How to run our test suite:
 
 We are using JUnit 4.13.2.
 
