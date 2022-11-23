@@ -12,6 +12,6 @@ public class JUnitTestRunner {
       System.out.println(failure.toString());
     }
 
-    System.out.println(result.wasSuccessful());
+    System.out.println("Did all tests pass? (true/false): " + result.wasSuccessful());
   }
 }
