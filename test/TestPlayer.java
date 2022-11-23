@@ -41,17 +41,14 @@ public class TestPlayer {
   }
 
   @Test
-  public void testFindDiscardables() {
+  public void testInitialHand() {
+    assertEquals("Player hand not empty before initialisation", "", player.handToString());
     player.initialHand(card1, 0);
     player.initialHand(card2, 1);
     player.initialHand(card3, 2);
     player.initialHand(card4, 3);
-    Queue<Card> expectedDiscard = new LinkedList<>();
-    expectedDiscard.add(card2);
-    expectedDiscard.add(card3);
-    expectedDiscard.add(card4);
-    Queue<Card> toDiscard = player.getDiscardables();
-    assertEquals("Discardable values inccorrect", expectedDiscard, toDiscard);
+    assertEquals("Player hand not filled correctly after initialisation", "1 2 3 4 ",
+        player.handToString());
   }
 
   @Test
@@ -76,7 +73,7 @@ public class TestPlayer {
   }
 
   @Test
-  public void updateHandDiscardableCard() {
+  public void testUpdateHand() {
     player.initialHand(card1, 0);
     player.initialHand(new Card(100), 1);
     player.initialHand(card3, 2);
