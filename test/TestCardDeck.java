@@ -31,12 +31,6 @@ public class TestCardDeck {
   }
 
   @Test
-  public void testCardDeckInsert() {
-    deck.insertCard(new Card(5));
-    assertEquals("Card values incorrect", 5, deck.drawCard().getCardValue());
-  }
-
-  @Test
   public void testCardDeckRemove() {
     deck.insertCard(new Card(5));
     deck.insertCard(new Card(6));
@@ -46,9 +40,16 @@ public class TestCardDeck {
     assertEquals("Card values incorrect", 5, removed.getCardValue());
   }
 
+  @Test
+  public void testInsertCard() {
+    deck.insertCard(new Card(5));
+    Card drawnCard = deck.drawCard();
+    assertEquals("Card values incorrect", 5, drawnCard.getCardValue());
+  }
+
+
   @After
   public void tearDown() {
     deck = null;
-
   }
 }

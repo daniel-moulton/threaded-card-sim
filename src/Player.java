@@ -74,10 +74,6 @@ public class Player implements Runnable {
     }
   }
 
-  public Queue<Card> getDiscardables() {
-    return discardables;
-  }
-
   /**
    * Appends the given string to the player's output file.
    *
